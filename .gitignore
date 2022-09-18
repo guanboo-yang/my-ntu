@@ -29,7 +29,6 @@ dist-ssr
 # Production
 .firebase
 apitests.http
-.env
 temp
 public
 dev-dist
