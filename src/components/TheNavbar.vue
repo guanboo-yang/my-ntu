@@ -22,8 +22,8 @@
 	const name = '楊冠柏'
 	const links = [
 		{ text: '帳號', icon: mdiAccount, to: '/profile' },
-		{ text: '課表', icon: mdiCalendarBlank, to: '/timetable' },
 		{ text: '成績', icon: mdiChartBar, to: '/grades' },
+		{ text: '課表', icon: mdiCalendarBlank, to: '/timetable' },
 		{ text: '連結', icon: mdiLink, to: '/' },
 	]
 </script>

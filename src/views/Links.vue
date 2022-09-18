@@ -20,6 +20,11 @@
 
 	const links = [
 		{
+			title: '臺灣大學電子郵件系統',
+			subtitle: 'NTU Mail',
+			href: 'https://webmail2.ntu.edu.tw/',
+		},
+		{
 			title: '學生學習歷程檔案',
 			subtitle: 'NTU ePortfolio',
 			href: 'https://if163.aca.ntu.edu.tw/',
