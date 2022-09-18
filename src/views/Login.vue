@@ -1,9 +1,9 @@
 <template>
 	<v-container style="text-align: center">
-		<h2 style="margin: 20px 0">Login</h2>
+		<h2 style="margin: 20px 0">登入學校帳號</h2>
 		<v-form lazy-validation style="margin: 10px auto; max-width: 300px" ref="form" @submit.prevent="execute()">
 			<v-text-field
-				v-model="id"
+				v-model="input.name"
 				variant="outlined"
 				density="compact"
 				label="Student ID"
@@ -13,7 +13,7 @@
 				style="margin-bottom: 5px"
 			/>
 			<v-text-field
-				v-model="pass"
+				v-model="input.pass"
 				variant="outlined"
 				density="compact"
 				label="Password"
@@ -39,8 +39,7 @@
 
 	const router = useRouter()
 	const route = useRoute()
-	const id = ref('')
-	const pass = ref('')
+	const input = reactive({ name: '', pass: '' })
 	const showPass = ref(false)
 	const form = ref<typeof import('vuetify/components')['VForm'] | null>(null)
 
@@ -52,15 +51,11 @@
 		{
 			immediate: false,
 			beforeFetch: ctx => {
-				ctx.options.body = JSON.stringify({
-					name: id.value,
-					pass: pass.value,
-				})
+				ctx.options.body = JSON.stringify(input)
 				return ctx
 			},
 			afterFetch: ({ data, response }) => {
-				console.log(data.cookie)
-				login(id.value, pass.value, data.cookie)
+				login(data.cookie)
 				router.push(String(route.query.redirect || '/'))
 				form.value?.reset()
 				form.value?.resetValidation()
@@ -69,9 +64,7 @@
 		}
 	).json()
 
-	const reset = () => {
-		form.value?.reset()
-	}
+	const reset = () => form.value?.reset()
 
 	onBeforeUnmount(() => canAbort && abort())
 </script>

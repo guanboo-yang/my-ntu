@@ -1,22 +1,9 @@
 import { fetch, CookieJar, Cookie } from 'node-fetch-cookies'
 import * as cheerio from 'cheerio'
 import type { Handler } from '@netlify/functions'
+import type { Profile } from '../src/interfaces'
 
-type Profile = {
-	id?: string
-	name?: string
-	department?: string
-	grade?: string
-	sex?: string
-	status?: string
-	idNumber?: string
-	birthday?: string
-	english?: string
-	address?: string
-	identity?: string
-}
-
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async (event, _context) => {
 	const headers = {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Origin': '*',

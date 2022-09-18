@@ -2,64 +2,90 @@
 	<v-container>
 		<v-card style="text-align: center; transition: none">
 			<v-card-item>
-				<v-avatar size="80" style="margin: 10px 0; background: #bbb3">
+				<v-avatar size="80" style="background: #bbb3; margin-bottom: 12px">
 					<v-img src="/ntu.png" />
 				</v-avatar>
-				<h3>{{ data?.name }}</h3>
-				<p style="opacity: 0.5">{{ data?.id }}</p>
+				<h3>{{ profile.name }}</h3>
+				<p style="opacity: 0.5">{{ profile.id }}</p>
 			</v-card-item>
-			<v-divider style="margin: 10px 0" />
+			<v-divider />
 			<v-progress-circular v-if="isFetching" indeterminate style="height: 100px" />
 			<v-card-item v-else-if="error">
 				<p>{{ error }}</p>
 			</v-card-item>
 			<v-card-item v-else style="text-align: left; font-size: 15px">
 				<v-row>
-					<v-col cols="6"> 系所：{{ data.department?.replace(/\s/g, ' ') }} </v-col>
-					<v-col cols="6"> 年級：{{ data.grade?.replace(/\s/g, ' ') }} </v-col>
+					<v-col cols="6"> 系所：{{ profile.department?.replace(/\s/g, ' ') }} </v-col>
+					<v-col cols="6"> 年級：{{ profile.grade?.replace(/\s/g, ' ') }} </v-col>
 				</v-row>
 				<v-row>
-					<v-col cols="6"> 性別：{{ data.sex }}</v-col>
-					<v-col cols="6"> 狀態：{{ data.status }} </v-col>
+					<v-col cols="6"> 性別：{{ profile.sex }}</v-col>
+					<v-col cols="6"> 狀態：{{ profile.status }} </v-col>
 				</v-row>
 				<!-- <v-row>
-					<v-col cols="6"> 身份證字號：{{ data.idNumber }} </v-col>
-					<v-col cols="6"> 生日：{{ data.birthday }} </v-col>
+					<v-col cols="6"> 身份證字號：{{ profile.idNumber }} </v-col>
+					<v-col cols="6"> 生日：{{ profile.birthday }} </v-col>
 				</v-row> -->
 				<v-row>
-					<v-col cols="12"> 英文名字：{{ data.english }} </v-col>
+					<v-col cols="12"> 英文名字：{{ profile.english }} </v-col>
 				</v-row>
 				<v-row>
-					<v-col cols="12"> 地址：{{ data.address }} </v-col>
+					<v-col cols="12" style="display: flex">
+						<span style="white-space: nowrap">地址：</span>
+						{{ profile.address }}
+					</v-col>
 				</v-row>
 				<v-row>
-					<v-col cols="12"> 身分別：{{ data.identity?.replace(/\s/g, ' ') }} </v-col>
+					<v-col cols="12"> 身分別：{{ profile.identity?.replace(/\s/g, ' ') }} </v-col>
 				</v-row>
-				<div style="margin: 20px; text-align: center">
-					<v-btn color="primary" @click="logout" to="/login" replace>登出</v-btn>
-				</div>
+			</v-card-item>
+			<v-divider />
+			<v-card-item>
+				<v-btn color="primary" @click="logout" to="/login" replace>登出</v-btn>
 			</v-card-item>
 		</v-card>
 	</v-container>
 </template>
 
 <script setup lang="ts">
-	import { useFetch } from '@vueuse/core'
-	import { onBeforeUnmount } from 'vue'
+	import { useFetch, useStorage } from '@vueuse/core'
+	import { onBeforeUnmount, onMounted } from 'vue'
 	import { useUser } from '../hooks'
+	import type { Profile } from '../interfaces'
 
-	const { user, logout } = useUser()
+	const { logout } = useUser()
 
-	const { data, error, isFetching, canAbort, abort } = useFetch(
+	const profile = useStorage<Profile>('profile', {
+		name: '訪客',
+	})
+
+	const cookies = useStorage('cookies', [])
+
+	const { execute, error, isFetching, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/profile',
 		{
 			method: 'POST',
-			body: JSON.stringify({ cookies: user.cookies }),
+			body: JSON.stringify({ cookies: cookies.value }),
 		},
-		{ initialData: {} }
-	).json()
+		{
+			immediate: false,
+			afterFetch: ({ data, response }) => {
+				console.log(response.ok, data)
+				if (response.ok) profile.value = data
+				return { data, response }
+			},
+		}
+	).json<Profile>()
+
+	onMounted(() => {
+		if (Object.keys(profile.value).length <= 1) execute()
+	})
 
 	onBeforeUnmount(() => canAbort && abort())
 </script>
 
-<style scoped></style>
+<style scoped>
+	.v-card-item {
+		padding: 1rem;
+	}
+</style>

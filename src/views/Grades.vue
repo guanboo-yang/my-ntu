@@ -8,7 +8,7 @@
 		<v-window v-model="tab" style="flex: 1">
 			<v-window-item value="summary" style="text-align: center">
 				<v-progress-circular v-if="isFetching" indeterminate style="height: 200px" />
-				<p v-else-if="error" style="padding: 50px 0">爬取失敗...</p>
+				<p v-else-if="error" style="padding: 50px 0">爬取失敗... 請重新登入</p>
 				<v-list v-else variant="elevated" style="padding: 0">
 					<v-list-item v-for="option of options" :key="option" style="font-size: 14px" @click="tab = option">
 						<v-row>
@@ -71,17 +71,16 @@
 </template>
 
 <script setup lang="ts">
-	import { useFetch } from '@vueuse/core'
+	import { useFetch, useStorage } from '@vueuse/core'
 	import { computed, onBeforeUnmount, ref } from 'vue'
-	import { useUser } from '../hooks'
 
+	const cookies = useStorage('cookies', [])
 	const tab = ref<string>('summary')
-	const { user } = useUser()
 	const { data, error, isFetching, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/grade',
 		{
 			method: 'POST',
-			body: JSON.stringify({ cookies: user.cookies }),
+			body: JSON.stringify({ cookies: cookies.value }),
 		},
 		{ initialData: {} }
 	).json<{
@@ -93,9 +92,9 @@
 			}[]
 			semester: string
 			year: string
-			gpa?: string
-			rank?: string
-			credits?: string
+			gpa: string
+			rank: string
+			credits: string
 		}
 	}>()
 	const options = computed(() => data.value && Object.keys(data.value).sort((a, b) => Number(b) - Number(a)))

@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/timetable',
 		name: 'Timetable',
-		component: () => import('../views/Timetable.vue'),
+		component: () => import('../views/CourseList.vue'),
 		alias: '/home',
 	},
 	{
@@ -46,6 +46,7 @@ router.beforeEach((to, from, next) => {
 	const { isLoggedIn } = useUser()
 	// console.log('to', to)
 	// console.log('from', from)
+	// console.log('isLoggedIn', isLoggedIn.value)
 	if (to.meta.requiresAuth && !isLoggedIn.value) {
 		next({ name: 'Login', query: { redirect: to.fullPath } })
 	} else {

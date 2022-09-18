@@ -12,19 +12,11 @@
 			target="_blank"
 			rel="noopener"
 		/>
-		<v-list>
-			<v-list-item v-for="course in data" :key="course.ser_no" :title="course.cou_cname" :subtitle="`${course.tea_cname} ${course.cls_time}`" />
-		</v-list>
 	</v-list>
 </template>
 
 <script setup lang="ts">
 	import { mdiChevronRight } from '@mdi/js'
-	import { useFetch } from '@vueuse/core'
-	import { onBeforeUnmount } from 'vue'
-
-	const ser_no = [13088, 20938, 32336, 44602, 48143, 51383, 57575, 67883, 77445, 97112]
-	const { data, canAbort, abort } = useFetch(import.meta.env.VITE_API_URL + '/course?ser_no=' + ser_no.join(',')).json()
 
 	const links = [
 		{
@@ -61,7 +53,6 @@
 			href: 'http://140.112.2.212/',
 		},
 	]
-	onBeforeUnmount(() => canAbort && abort())
 </script>
 
 <style scoped>

@@ -28,3 +28,17 @@ export type Semester = {
 	rank?: number
 	gpa?: number
 }
+
+export type Profile = {
+	id?: string
+	name?: string
+	department?: string
+	grade?: string
+	sex?: string
+	status?: string
+	idNumber?: string
+	birthday?: string
+	english?: string
+	address?: string
+	identity?: string
+}

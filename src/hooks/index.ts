@@ -1,32 +1,34 @@
-import { createGlobalState, useColorMode, useCycleList, useLocalStorage } from '@vueuse/core'
+import { createGlobalState, useColorMode, useCycleList, useLocalStorage, useStorage } from '@vueuse/core'
 import { useTheme } from 'vuetify'
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
+import { Profile } from '../interfaces'
 
 export const useUser = createGlobalState(() => {
+	const profile = useStorage<Profile>('profile', null)
+	const cookies = useStorage<string[]>('cookies', [])
 	const isLoggedIn = ref(false)
-	const user = reactive({
-		name: '訪客',
-		id: '',
-		pass: '',
-		cookies: [] as any[],
-	})
-	const login = (id: string, pass: string, cookies: any[]) => {
-		user.id = id
-		user.pass = pass
-		user.cookies = cookies
+
+	const login = (c: any[]) => {
+		cookies.value = c
+		isLoggedIn.value = true
 	}
+
 	const logout = () => {
-		user.id = ''
-		user.pass = ''
+		cookies.value = []
+		profile.value = null
 	}
+
 	watch(
-		() => user,
+		profile,
 		() => {
-			isLoggedIn.value = !(user.id === '' || user.pass === '')
+			isLoggedIn.value = profile.value !== null
 		},
-		{ deep: true }
+		{
+			immediate: true,
+		}
 	)
-	return { user, isLoggedIn, login, logout }
+
+	return { isLoggedIn, login, logout }
 })
 
 export const useMyTheme = createGlobalState(() => {
