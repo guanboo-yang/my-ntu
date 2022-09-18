@@ -2,7 +2,7 @@
 	<div style="display: flex; flex-direction: column; height: calc(100vh - 112px)">
 		<v-tabs v-model="tab" centered bg-color="primary" hide-slider>
 			<v-tab value="summary">總覽</v-tab>
-			<v-tab v-for="(option, idx) of options" :key="option" :value="option"> {{ data![option].year }}學年<br />{{ data![option].semester === '1' ? '上學期' : '下學期' }} </v-tab>
+			<v-tab v-for="option of options" :key="option" :value="option"> {{ data![option].year }}學年<br />{{ data![option].semester === '1' ? '上學期' : '下學期' }} </v-tab>
 			<v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
 		</v-tabs>
 		<v-window v-model="tab" style="flex: 1">
@@ -10,7 +10,7 @@
 				<v-progress-circular v-if="isFetching" indeterminate style="height: 200px" />
 				<p v-else-if="error" style="padding: 50px 0">爬取失敗...</p>
 				<v-list v-else variant="elevated" style="padding: 0">
-					<v-list-item v-for="(option, idx) of options" :key="option" style="font-size: 14px" @click="tab = option">
+					<v-list-item v-for="option of options" :key="option" style="font-size: 14px" @click="tab = option">
 						<v-row>
 							<v-col cols="3" style="text-align: center">
 								<span>{{ data![option].year }}學年</span>
@@ -36,7 +36,7 @@
 					</v-list-item>
 				</v-list>
 			</v-window-item>
-			<v-window-item v-for="(option, idx) of options" :key="option" :value="option">
+			<v-window-item v-for="option of options" :key="option" :value="option">
 				<v-list variant="elevated" style="padding: 0">
 					<v-list-item style="font-size: 14px">
 						<v-row>
@@ -72,23 +72,18 @@
 
 <script setup lang="ts">
 	import { useFetch } from '@vueuse/core'
-	import { computed, ref } from 'vue'
+	import { computed, onBeforeUnmount, ref } from 'vue'
 	import { useUser } from '../hooks'
 
 	const tab = ref<string>('summary')
 	const { user } = useUser()
-	const { data, error, isFetching } = useFetch(
+	const { data, error, isFetching, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/grade',
 		{
 			method: 'POST',
-			body: JSON.stringify({
-				name: user.id,
-				pass: user.pass,
-			}),
+			body: JSON.stringify({ cookies: user.cookies }),
 		},
-		{
-			initialData: {},
-		}
+		{ initialData: {} }
 	).json<{
 		[key: string]: {
 			courses: {
@@ -104,6 +99,7 @@
 		}
 	}>()
 	const options = computed(() => data.value && Object.keys(data.value).sort((a, b) => Number(b) - Number(a)))
+	onBeforeUnmount(() => canAbort && abort())
 </script>
 
 <style scoped lang="scss">

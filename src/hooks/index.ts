@@ -8,10 +8,12 @@ export const useUser = createGlobalState(() => {
 		name: '訪客',
 		id: '',
 		pass: '',
+		cookies: [] as any[],
 	})
-	const login = (id: string, pass: string) => {
+	const login = (id: string, pass: string, cookies: any[]) => {
 		user.id = id
 		user.pass = pass
+		user.cookies = cookies
 	}
 	const logout = () => {
 		user.id = ''

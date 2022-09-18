@@ -1,8 +1,7 @@
 <template>
 	<v-container style="text-align: center">
 		<h2 style="margin: 20px 0">Login</h2>
-		<form style="margin: 10px auto; max-width: 300px">
-			<!-- id input -->
+		<v-form lazy-validation style="margin: 10px auto; max-width: 300px" ref="form" @submit.prevent="execute()">
 			<v-text-field
 				v-model="id"
 				variant="outlined"
@@ -13,7 +12,6 @@
 				type="text"
 				style="margin-bottom: 5px"
 			/>
-			<!-- password input -->
 			<v-text-field
 				v-model="pass"
 				variant="outlined"
@@ -24,29 +22,58 @@
 				:append-inner-icon="showPass ? mdiEye : mdiEyeOff"
 				@click:append-inner="showPass = !showPass"
 				:type="showPass ? 'text' : 'password'"
+				style="margin-bottom: 5px"
 			/>
-		</form>
-		<v-btn color="primary" @click="clickLogin">Login</v-btn>
+			<v-btn color="primary" @click="reset" style="margin-right: 10px">Reset</v-btn>
+			<v-btn color="primary" type="submit" :loading="isFetching">Login</v-btn>
+		</v-form>
 	</v-container>
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { onBeforeUnmount, reactive, ref } from 'vue'
 	import { useUser } from '../hooks'
 	import { mdiEye, mdiEyeOff } from '@mdi/js'
 	import { useRoute, useRouter } from 'vue-router'
+	import { useFetch } from '@vueuse/core'
 
 	const router = useRouter()
 	const route = useRoute()
 	const id = ref('')
 	const pass = ref('')
 	const showPass = ref(false)
+	const form = ref<typeof import('vuetify/components')['VForm'] | null>(null)
 
 	const { login } = useUser()
-	const clickLogin = () => {
-		login(id.value, pass.value)
-		router.push(String(route.query.redirect) || '/')
+
+	const { isFetching, execute, canAbort, abort } = useFetch(
+		import.meta.env.VITE_API_URL + '/login',
+		{ method: 'POST' },
+		{
+			immediate: false,
+			beforeFetch: ctx => {
+				ctx.options.body = JSON.stringify({
+					name: id.value,
+					pass: pass.value,
+				})
+				return ctx
+			},
+			afterFetch: ({ data, response }) => {
+				console.log(data.cookie)
+				login(id.value, pass.value, data.cookie)
+				router.push(String(route.query.redirect || '/'))
+				form.value?.reset()
+				form.value?.resetValidation()
+				return { data, response }
+			},
+		}
+	).json()
+
+	const reset = () => {
+		form.value?.reset()
 	}
+
+	onBeforeUnmount(() => canAbort && abort())
 </script>
 
 <style scoped></style>

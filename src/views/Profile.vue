@@ -35,9 +35,9 @@
 				<v-row>
 					<v-col cols="12"> 身分別：{{ data.identity?.replace(/\s/g, ' ') }} </v-col>
 				</v-row>
-				<v-card-actions style="justify-content: center">
+				<div style="margin: 20px; text-align: center">
 					<v-btn color="primary" @click="logout" to="/login" replace>登出</v-btn>
-				</v-card-actions>
+				</div>
 			</v-card-item>
 		</v-card>
 	</v-container>
@@ -45,25 +45,21 @@
 
 <script setup lang="ts">
 	import { useFetch } from '@vueuse/core'
+	import { onBeforeUnmount } from 'vue'
 	import { useUser } from '../hooks'
 
 	const { user, logout } = useUser()
 
-	console.log(import.meta.env.VITE_API_URL + '/profile')
-
-	const { data, error, isFetching } = useFetch(
+	const { data, error, isFetching, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/profile',
 		{
 			method: 'POST',
-			body: JSON.stringify({
-				name: user.id,
-				pass: user.pass,
-			}),
+			body: JSON.stringify({ cookies: user.cookies }),
 		},
-		{
-			initialData: {},
-		}
+		{ initialData: {} }
 	).json()
+
+	onBeforeUnmount(() => canAbort && abort())
 </script>
 
 <style scoped></style>
