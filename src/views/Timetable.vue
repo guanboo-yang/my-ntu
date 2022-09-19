@@ -70,7 +70,7 @@
 	import { mdiClose } from '@mdi/js'
 	import { useRouteQuery } from '@vueuse/router'
 	// defineProps<{}>()
-	const semester = useRouteQuery('s', '111-1')
+	const semester: Readonly<any> = useRouteQuery('s', '111-1')
 	const dialog = ref(false)
 	const choose = ref(false)
 	const showDays = ref(5)
