@@ -18,7 +18,6 @@ export const useUser = createGlobalState(() => {
 		cookies.value = []
 		profile.value = {}
 		grades.value = []
-		console.log('logout')
 	}
 
 	watch(

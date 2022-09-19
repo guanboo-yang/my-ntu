@@ -10,7 +10,8 @@
 				<v-progress-circular v-if="isFetching" indeterminate style="height: 200px" />
 				<template v-else-if="error">
 					<p style="padding: 50px 0 10px 0">爬取失敗... {{ error }}</p>
-					<v-btn color="primary" @click="logout" to="/login?redirect=/grades" replace>重新登入</v-btn>
+					<v-btn color="primary" @click="execute()" style="margin: 5px">重新爬取</v-btn>
+					<v-btn color="primary" @click="logout" :to="{ name: '登入', query: { redirect: '/grades' } }" replace style="margin: 5px">重新登入</v-btn>
 				</template>
 				<v-list v-else variant="elevated" style="padding: 0">
 					<v-list-item v-for="option of options" :key="option" @click="tab = option" class="secondary">
@@ -37,6 +38,11 @@
 							</v-col>
 						</v-row>
 					</v-list-item>
+					<p style="opacity: 0.5; font-size: 14px">
+						<span>重新登入以更新成績</span>
+						<br />
+						<span>資料來源：NTU ePortfolio</span>
+					</p>
 				</v-list>
 			</v-window-item>
 			<v-window-item v-for="option of options" :key="option" :value="option">

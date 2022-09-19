@@ -1,5 +1,8 @@
 <template>
 	<v-list>
+		<div v-if="isFetching" style="text-align: center">
+			<v-progress-circular indeterminate style="height: 200px" />
+		</div>
 		<v-list-item
 			v-for="course in data"
 			:key="course.ser_no"
@@ -16,7 +19,7 @@
 	import { onBeforeUnmount } from 'vue'
 
 	const ser_no = [13088, 20938, 32336, 44602, 48143, 51383, 57575, 67883, 77445, 97112]
-	const { data, canAbort, abort } = useFetch(import.meta.env.VITE_API_URL + '/course?ser_no=' + ser_no.join(',')).json()
+	const { data, isFetching, canAbort, abort } = useFetch(import.meta.env.VITE_API_URL + '/course?ser_no=' + ser_no.join(',')).json()
 
 	onBeforeUnmount(() => canAbort && abort())
 </script>

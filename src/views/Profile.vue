@@ -41,9 +41,12 @@
 			</v-card-item>
 			<v-divider />
 			<v-card-item>
-				<v-btn color="primary" @click="logout" to="/login?redirect=/profile" replace>登出</v-btn>
+				<v-btn color="primary" @click="logout" :to="{ name: '登入', query: { redirect: '/profile' } }" replace>登出</v-btn>
 			</v-card-item>
 		</v-card>
+		<p style="opacity: 0.5; font-size: 14px; margin-top: 10px; text-align: center">
+			<span>資料來源：NTU ePortfolio</span>
+		</p>
 	</v-container>
 </template>
 

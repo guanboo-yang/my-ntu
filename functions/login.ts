@@ -34,6 +34,7 @@ export const handler: Handler = async (event, context) => {
 			})
 
 			// get all cookies!
+			// await fetch(cookieJar, 'https://if177.aca.ntu.edu.tw/qcaureg/stulogin.asp')
 
 			return {
 				statusCode: 200,
