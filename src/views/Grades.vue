@@ -13,7 +13,7 @@
 					<v-btn color="primary" @click="logout" to="/login?redirect=/grades" replace>重新登入</v-btn>
 				</template>
 				<v-list v-else variant="elevated" style="padding: 0">
-					<v-list-item v-for="option of options" :key="option" style="font-size: 14px" @click="tab = option">
+					<v-list-item v-for="option of options" :key="option" @click="tab = option" class="secondary">
 						<v-row>
 							<v-col cols="3" style="text-align: center">
 								<span>{{ grades[option]?.year }}學年</span>
@@ -41,7 +41,7 @@
 			</v-window-item>
 			<v-window-item v-for="option of options" :key="option" :value="option">
 				<v-list variant="elevated" style="padding: 0">
-					<v-list-item style="font-size: 14px">
+					<v-list-item class="secondary">
 						<v-row>
 							<v-col cols="4" style="text-align: center">
 								<span>學分</span>
@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 	import { useFetch, useStorage } from '@vueuse/core'
-	import { computed, onBeforeUnmount, ref } from 'vue'
+	import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 	import { useUser } from '../hooks'
 
 	type Grades = {
@@ -100,13 +100,14 @@
 	const { logout } = useUser()
 
 	const tab = ref<string>('summary')
-	const { data, error, isFetching, canAbort, abort } = useFetch(
+	const { error, isFetching, execute, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/grade',
 		{
 			method: 'POST',
 			body: JSON.stringify({ cookies: cookies.value }),
 		},
 		{
+			immediate: false,
 			onFetchError: ({ response, error }) => {
 				return { response, error }
 			},
@@ -117,7 +118,11 @@
 		}
 	).json<{}>()
 
-	const options = computed(() => data.value && Object.keys(data.value).sort((a, b) => Number(b) - Number(a)))
+	onMounted(() => {
+		if (!Object.keys(grades.value).length) execute()
+	})
+
+	const options = computed(() => grades.value && Object.keys(grades.value).sort((a, b) => Number(b) - Number(a)))
 
 	onBeforeUnmount(() => canAbort && abort())
 </script>
@@ -157,6 +162,10 @@
 		padding: 6px 16px !important;
 		margin: 12px;
 		border-radius: 4px;
+		font-size: 14px;
+		&.secondary {
+			background: rgba(var(--v-theme-secondary));
+		}
 	}
 	:deep(.v-slide-group__content) {
 		/* flex: 0 1 auto; */
