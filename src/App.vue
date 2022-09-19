@@ -1,5 +1,8 @@
 <script setup lang="ts">
 	import TheNavbar from './components/TheNavbar.vue'
+	import { useUser } from './hooks'
+
+	const { isLoggedIn } = useUser()
 </script>
 
 <template>
@@ -8,9 +11,10 @@
 		<v-main>
 			<router-view v-slot="{ Component }">
 				<transition name="fade" mode="out-in">
-					<keep-alive>
+					<keep-alive v-if="isLoggedIn">
 						<component :is="Component" />
 					</keep-alive>
+					<component v-else :is="Component" />
 				</transition>
 			</router-view>
 		</v-main>

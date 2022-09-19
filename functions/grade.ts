@@ -31,12 +31,21 @@ export const handler: Handler = async (event, context) => {
 			const cookies = body.cookies
 			cookies.forEach((cookie: any) => cookieJar.addCookie(Cookie.fromObject(cookie)))
 
-			let res, arrayBuffer, decoded, $, el
+			let res, arrayBuffer, decoded, $
 			res = await fetch(cookieJar, 'https://if163.aca.ntu.edu.tw/eportfolio/student/CourseSem.asp')
 			arrayBuffer = await res.arrayBuffer()
 			decoded = decoder.decode(arrayBuffer)
 			$ = cheerio.load(decoded)
 			const table = $('html > body > table:nth-child(2) > tbody > tr > td:nth-child(2) > div > div > div > center > table')
+			// if not logged in
+			if (table.length === 0) {
+				return {
+					statusCode: 401,
+					body: JSON.stringify({ message: 'Unauthorized' }),
+					headers,
+				}
+			}
+			// end if
 			const data = {}
 			for (let i = 0; i < table.length; i++) {
 				const row = $(table[i]).find('tbody > tr')
@@ -63,9 +72,9 @@ export const handler: Handler = async (event, context) => {
 			arrayBuffer = await res.arrayBuffer()
 			decoded = decoder.decode(arrayBuffer)
 			$ = cheerio.load(decoded)
-			el = $('body > table:nth-child(2) > tbody > tr > td.content > div > div > div > center > table > tbody > tr')
-			for (let i = 1; i < el.length; i++) {
-				const info = $(el[i])
+			const row = $('body > table:nth-child(2) > tbody > tr > td.content > div > div > div > center > table > tbody > tr')
+			for (let i = 1; i < row.length; i++) {
+				const info = $(row[i])
 				const year = info.find('td:nth-child(7)').text()
 				const semester = info.find('td:nth-child(8)').text()
 				const yearSemester = `${year}${semester}`

@@ -1,13 +1,13 @@
 <template>
 	<v-container style="text-align: center">
 		<h2 style="margin: 20px 0">登入學校帳號</h2>
-		<v-form lazy-validation style="margin: 10px auto; max-width: 300px" ref="form" @submit.prevent="execute()">
+		<v-form v-model="valid" lazy-validation style="margin: 0 auto; max-width: 250px" ref="form" @submit.prevent="execute()">
 			<v-text-field
 				v-model="input.name"
 				variant="outlined"
 				density="compact"
-				label="Student ID"
-				:rules="[v => !!v || 'Student ID is required']"
+				label="學號"
+				:rules="[v => !!v || '學號不可為空', v => v.length === 9 || '學號長度為9', v => /^[a-zA-Z]/.test(v) || '學號必須以英文字母開頭']"
 				required
 				type="text"
 				style="margin-bottom: 5px"
@@ -16,16 +16,16 @@
 				v-model="input.pass"
 				variant="outlined"
 				density="compact"
-				label="Password"
-				:rules="[v => !!v || 'Password is required']"
+				label="密碼"
+				:rules="[v => !!v || '密碼不可為空', v => v.length >= 5 || '密碼長度至少為5']"
 				required
 				:append-inner-icon="showPass ? mdiEye : mdiEyeOff"
 				@click:append-inner="showPass = !showPass"
 				:type="showPass ? 'text' : 'password'"
 				style="margin-bottom: 5px"
 			/>
-			<v-btn color="primary" @click="reset" style="margin-right: 10px">Reset</v-btn>
-			<v-btn color="primary" type="submit" :loading="isFetching">Login</v-btn>
+			<v-btn color="primary" @click="reset" style="margin-right: 10px">重設</v-btn>
+			<v-btn color="primary" type="submit" :disabled="!valid" :loading="isFetching">登入</v-btn>
 		</v-form>
 	</v-container>
 </template>
@@ -41,6 +41,7 @@
 	const route = useRoute()
 	const input = reactive({ name: '', pass: '' })
 	const showPass = ref(false)
+	const valid = ref(false)
 	const form = ref<typeof import('vuetify/components')['VForm'] | null>(null)
 
 	const { login } = useUser()
@@ -50,12 +51,12 @@
 		{ method: 'POST' },
 		{
 			immediate: false,
-			beforeFetch: ctx => {
-				ctx.options.body = JSON.stringify(input)
-				return ctx
+			beforeFetch: ({ url, options, cancel }) => {
+				options.body = JSON.stringify(input)
+				return { url, options, cancel }
 			},
 			afterFetch: ({ data, response }) => {
-				login(data.cookie)
+				login(data.cookies)
 				router.push(String(route.query.redirect || '/'))
 				form.value?.reset()
 				form.value?.resetValidation()

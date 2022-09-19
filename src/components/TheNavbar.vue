@@ -3,7 +3,7 @@
 		<v-app-bar-title>
 			<b>MY NTU</b>
 		</v-app-bar-title>
-		<span style="margin: 0 10px">{{ name }}</span>
+		<span style="margin: 0 10px">{{ profile.name || '訪客' }}</span>
 		<v-btn size="small" :icon="mode === 'light' ? mdiBrightness2 : mdiWhiteBalanceSunny" @click="nextMode()" />
 	</v-app-bar>
 	<v-bottom-navigation bgColor="primary" mandatory grow>
@@ -16,10 +16,13 @@
 
 <script setup lang="ts">
 	import { mdiCalendarBlank, mdiAccount, mdiLink, mdiChartBar, mdiBrightness2, mdiWhiteBalanceSunny } from '@mdi/js'
+	import { useStorage } from '@vueuse/core'
 	import { useMyTheme } from '../hooks'
+	import { Profile } from '../interfaces'
 
 	const { mode, nextMode } = useMyTheme()
-	const name = '楊冠柏'
+	const profile = useStorage<Profile>('profile', {})
+
 	const links = [
 		{ text: '帳號', icon: mdiAccount, to: '/profile' },
 		{ text: '成績', icon: mdiChartBar, to: '/grades' },

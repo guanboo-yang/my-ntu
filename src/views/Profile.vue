@@ -5,8 +5,8 @@
 				<v-avatar size="80" style="background: #bbb3; margin-bottom: 12px">
 					<v-img src="/ntu.png" />
 				</v-avatar>
-				<h3>{{ profile.name }}</h3>
-				<p style="opacity: 0.5">{{ profile.id }}</p>
+				<h3>{{ profile.name || '訪客' }}</h3>
+				<p style="opacity: 0.5">{{ profile.id || '請先登入' }}</p>
 			</v-card-item>
 			<v-divider />
 			<v-progress-circular v-if="isFetching" indeterminate style="height: 100px" />
@@ -41,7 +41,7 @@
 			</v-card-item>
 			<v-divider />
 			<v-card-item>
-				<v-btn color="primary" @click="logout" to="/login" replace>登出</v-btn>
+				<v-btn color="primary" @click="logout" to="/login?redirect=/profile" replace>登出</v-btn>
 			</v-card-item>
 		</v-card>
 	</v-container>
@@ -55,11 +55,9 @@
 
 	const { logout } = useUser()
 
-	const profile = useStorage<Profile>('profile', {
-		name: '訪客',
-	})
+	const profile = useStorage<Profile>('profile', {})
 
-	const cookies = useStorage('cookies', [])
+	const cookies = useStorage<any[]>('cookies', [])
 
 	const { execute, error, isFetching, canAbort, abort } = useFetch(
 		import.meta.env.VITE_API_URL + '/profile',
@@ -70,7 +68,6 @@
 		{
 			immediate: false,
 			afterFetch: ({ data, response }) => {
-				console.log(response.ok, data)
 				if (response.ok) profile.value = data
 				return { data, response }
 			},
@@ -78,7 +75,7 @@
 	).json<Profile>()
 
 	onMounted(() => {
-		if (Object.keys(profile.value).length <= 1) execute()
+		if (!profile.value.name) execute()
 	})
 
 	onBeforeUnmount(() => canAbort && abort())

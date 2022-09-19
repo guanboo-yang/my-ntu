@@ -4,8 +4,9 @@ import { ref, watch } from 'vue'
 import { Profile } from '../interfaces'
 
 export const useUser = createGlobalState(() => {
-	const profile = useStorage<Profile>('profile', null)
+	const profile = useStorage<Profile>('profile', {})
 	const cookies = useStorage<string[]>('cookies', [])
+	const grades = useStorage<string[]>('grades', [])
 	const isLoggedIn = ref(false)
 
 	const login = (c: any[]) => {
@@ -15,17 +16,17 @@ export const useUser = createGlobalState(() => {
 
 	const logout = () => {
 		cookies.value = []
-		profile.value = null
+		profile.value = {}
+		grades.value = []
+		console.log('logout')
 	}
 
 	watch(
 		profile,
 		() => {
-			isLoggedIn.value = profile.value !== null
+			isLoggedIn.value = !!profile.value.name
 		},
-		{
-			immediate: true,
-		}
+		{ immediate: true }
 	)
 
 	return { isLoggedIn, login, logout }

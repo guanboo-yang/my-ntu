@@ -26,19 +26,19 @@ export const handler: Handler = async (event, context) => {
 
 			const cookieJar = new CookieJar()
 			const body = JSON.parse(event.body)
-			await fetch(cookieJar, 'https://my.ntu.edu.tw/login.aspx', {
+			// await fetch(cookieJar, 'https://my.ntu.edu.tw/login.aspx', {
+			await fetch(cookieJar, 'https://if163.aca.ntu.edu.tw/eportfolio/login.asp', {
 				method: 'POST',
 				headers: { 'content-type': 'application/x-www-form-urlencoded' },
 				body: `user=${body.name}&pass=${body.pass}&Submit=%E7%99%BB%E5%85%A5`,
 			})
 
 			// get all cookies!
-			await fetch(cookieJar, 'https://if163.aca.ntu.edu.tw/eportfolio/student/index.asp')
 
 			return {
 				statusCode: 200,
 				body: JSON.stringify({
-					cookie: [...cookieJar.cookiesValid(true)],
+					cookies: [...cookieJar.cookiesValid(true)],
 				}),
 				headers,
 			}
