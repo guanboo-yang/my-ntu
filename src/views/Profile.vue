@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card style="text-align: center; transition: none">
+    <v-card style="text-align: center; transition: none; margin-bottom: 10px">
       <v-card-item>
         <v-avatar size="80" style="background: #bbb3; margin-bottom: 12px">
           <v-img src="/ntu.png" />
@@ -60,22 +60,16 @@
         >
       </v-card-item>
     </v-card>
-    <p
-      style="
-        opacity: 0.5;
-        font-size: 14px;
-        margin-top: 10px;
-        text-align: center;
-      "
-    >
-      <span>資料來源：NTU ePortfolio</span>
-    </p>
+    <data-footer :execute="execute" source="NTU ePortfolio">
+      嘗試刷新資料
+    </data-footer>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { useFetch, useStorage } from '@vueuse/core'
 import { onBeforeUnmount, onMounted } from 'vue'
+import DataFooter from '../components/DataFooter.vue'
 import { useUser } from '../hooks'
 import type { Profile } from '../interfaces'
 
@@ -94,7 +88,10 @@ const { execute, error, isFetching, canAbort, abort } = useFetch(
   {
     immediate: false,
     afterFetch: ({ data, response }) => {
-      if (response.ok) profile.value = data
+      if (response.ok) {
+        profile.value = data.profile
+        cookies.value = data.cookies
+      }
       return { data, response }
     }
   }

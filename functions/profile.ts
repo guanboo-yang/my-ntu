@@ -77,10 +77,12 @@ export const handler: Handler = async (event, _context) => {
         .find('tr:nth-child(7) > td:nth-child(2)')
         .text()
         .trim()
-
       return {
         statusCode: 200,
-        body: JSON.stringify(profile),
+        body: JSON.stringify({
+          cookies: [...cookieJar.cookiesValid(true)],
+          profile
+        }),
         headers
       }
     default:

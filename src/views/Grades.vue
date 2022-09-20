@@ -65,12 +65,10 @@
               </v-col>
             </v-row>
           </v-list-item>
-          <p style="opacity: 0.5; font-size: 14px">
-            <span>重新登入以更新成績</span>
-            <br />
-            <span>資料來源：NTU ePortfolio</span>
-          </p>
         </v-list>
+        <data-footer :execute="execute" source="NTU ePortfolio">
+          嘗試刷新成績
+        </data-footer>
       </v-window-item>
       <v-window-item v-for="option of options" :key="option" :value="option">
         <v-list variant="elevated" style="padding: 0">
@@ -122,6 +120,7 @@
 <script setup lang="ts">
 import { useFetch, useStorage } from '@vueuse/core'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import DataFooter from '../components/DataFooter.vue'
 import { useUser } from '../hooks'
 
 type Grades = {
@@ -158,7 +157,10 @@ const { error, isFetching, execute, canAbort, abort } = useFetch(
       return { response, error }
     },
     afterFetch: ({ data, response }) => {
-      if (response.ok) grades.value = data
+      if (response.ok) {
+        grades.value = data.grades
+        cookies.value = data.cookies
+      }
       return { data, response }
     }
   }

@@ -56,7 +56,7 @@ export const handler: Handler = async (event, context) => {
         }
       }
       // end if
-      const data = {}
+      const grades = {}
       for (let i = 0; i < table.length; i++) {
         const row = $(table[i]).find('tbody > tr')
         let yearSemester
@@ -66,8 +66,8 @@ export const handler: Handler = async (event, context) => {
           const year = yearSemester.slice(0, -1)
           const semester = yearSemester.slice(-1)
           if (yearSemester === '') continue
-          if (!data[yearSemester])
-            data[yearSemester] = { year, semester, courses: [] }
+          if (!grades[yearSemester])
+            grades[yearSemester] = { year, semester, courses: [] }
           const course = {
             id: info.find('td:nth-child(3)').text().trim(),
             name: info.find('td:nth-child(7)').text().trim(),
@@ -76,14 +76,14 @@ export const handler: Handler = async (event, context) => {
               info.find('td:nth-child(8)').text().trim() ||
               info.find('td:nth-child(12)').text().trim()
           }
-          data[yearSemester].courses.push(course)
+          grades[yearSemester].courses.push(course)
         }
         const credits = $(table[i])
           .nextAll('center')
           .first()
           .text()
           .split('：')[1]
-        if (credits) data[yearSemester].credits = credits
+        if (credits) grades[yearSemester].credits = credits
       }
       res = await fetch(
         cookieJar,
@@ -102,14 +102,17 @@ export const handler: Handler = async (event, context) => {
         const yearSemester = `${year}${semester}`
         if (year === '') continue
         if (semester === '全年') continue
-        if (!data[yearSemester])
-          data[yearSemester] = { year, semester, courses: [] }
-        data[yearSemester].gpa = info.find('td:nth-child(4)').text()
-        data[yearSemester].rank = info.find('td:nth-child(5)').text()
+        if (!grades[yearSemester])
+          grades[yearSemester] = { year, semester, courses: [] }
+        grades[yearSemester].gpa = info.find('td:nth-child(4)').text()
+        grades[yearSemester].rank = info.find('td:nth-child(5)').text()
       }
       return {
         statusCode: 200,
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          cookies: [...cookieJar.cookiesValid(true)],
+          grades
+        }),
         headers
       }
     default:
