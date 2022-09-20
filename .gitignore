@@ -27,8 +27,5 @@ dist-ssr
 .netlify
 
 # Production
-.firebase
 apitests.http
-temp
 dev-dist
-deploy*
