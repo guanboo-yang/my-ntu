@@ -33,7 +33,10 @@ export const handler: Handler = async (event, context) => {
         cookieJar.addCookie(Cookie.fromObject(cookie))
       )
 
-      let res, arrayBuffer, decoded, $
+      let res: Response,
+        arrayBuffer: any,
+        decoded: string,
+        $: cheerio.CheerioAPI
       res = await fetch(
         cookieJar,
         'https://if163.aca.ntu.edu.tw/eportfolio/student/CourseSem.asp'
@@ -80,7 +83,7 @@ export const handler: Handler = async (event, context) => {
           .first()
           .text()
           .split('：')[1]
-        data[yearSemester].credits = credits
+        if (credits) data[yearSemester].credits = credits
       }
       res = await fetch(
         cookieJar,
