@@ -3,7 +3,7 @@
     <v-app-bar-title>
       <b>MY NTU</b>
     </v-app-bar-title>
-    <span style="margin: 0 10px">{{ name || '訪客' }}</span>
+    <span style="margin: 0 10px">{{ profile.name || '訪客' }}</span>
     <v-btn
       size="small"
       :icon="mode === 'light' ? mdiBrightness2 : mdiWhiteBalanceSunny"
@@ -22,30 +22,16 @@
 
 <script setup lang="ts">
 import { mdiBrightness2, mdiWhiteBalanceSunny } from '@mdi/js'
-import { useStorage } from '@vueuse/core'
-import { ref, watch } from 'vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 import { useMyTheme, useUser } from '../hooks'
-import { Profile } from '../interfaces'
 
 const router = useRouter()
-const { isLoggedIn } = useUser()
+const { profile } = useUser()
 const { mode, nextMode } = useMyTheme()
-const profile = useStorage<Profile>('profile', {})
-const name = ref('')
 
 const routes = router
   .getRoutes()
   .filter((route: RouteRecordRaw) => route.meta?.icon)
-
-watch(
-  isLoggedIn,
-  () => {
-    if (isLoggedIn.value) name.value = profile.value.name || ''
-    else name.value = ''
-  },
-  { immediate: true }
-)
 </script>
 
 <style scoped lang="scss">

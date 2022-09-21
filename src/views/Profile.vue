@@ -51,13 +51,9 @@
       </v-card-item>
       <v-divider />
       <v-card-item>
-        <v-btn
-          color="primary"
-          @click="logout"
-          :to="{ name: '登入', query: { redirect: '/profile' } }"
-          replace
-          >登出</v-btn
-        >
+        <v-btn color="primary" @click="logout" :to="{ name: '登入' }" replace>
+          登出
+        </v-btn>
       </v-card-item>
     </v-card>
     <data-footer :execute="execute" source="NTU ePortfolio">
@@ -67,17 +63,13 @@
 </template>
 
 <script setup lang="ts">
-import { useFetch, useStorage } from '@vueuse/core'
+import { useFetch } from '@vueuse/core'
 import { onBeforeUnmount, onMounted } from 'vue'
 import DataFooter from '../components/DataFooter.vue'
 import { useUser } from '../hooks'
 import type { Profile } from '../interfaces'
 
-const { logout } = useUser()
-
-const profile = useStorage<Profile>('profile', {})
-
-const cookies = useStorage<any[]>('cookies', [])
+const { logout, profile, cookies } = useUser()
 
 const { execute, error, isFetching, canAbort, abort } = useFetch(
   import.meta.env.VITE_API_URL + '/profile',

@@ -74,7 +74,8 @@ export const handler: Handler = async (event, context) => {
             credits: info.find('td:nth-child(6)').text().trim(),
             grade:
               info.find('td:nth-child(8)').text().trim() ||
-              info.find('td:nth-child(12)').text().trim()
+              info.find('td:nth-child(12)').text().trim() ||
+              info.find('td:nth-child(9)').text().trim()
           }
           grades[yearSemester].courses.push(course)
         }

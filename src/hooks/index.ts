@@ -9,10 +9,25 @@ import { useTheme } from 'vuetify'
 import { ref, watch } from 'vue'
 import { Profile } from '../interfaces'
 
+type Grades = {
+  [key: string]: {
+    courses: {
+      name: string
+      credits: number
+      grade: number
+    }[]
+    semester: string
+    year: string
+    gpa: string
+    rank: string
+    credits: string
+  }
+}
+
 export const useUser = createGlobalState(() => {
   const profile = useStorage<Profile>('profile', {})
+  const grades = useStorage<Grades>('grades', {})
   const cookies = useStorage<string[]>('cookies', [])
-  const grades = useStorage<string[]>('grades', [])
   const isLoggedIn = ref(false)
 
   const login = (c: any[]) => {
@@ -23,18 +38,14 @@ export const useUser = createGlobalState(() => {
   const logout = () => {
     cookies.value = []
     profile.value = {}
-    grades.value = []
+    grades.value = {}
   }
 
-  watch(
-    profile,
-    () => {
-      isLoggedIn.value = !!profile.value.name
-    },
-    { immediate: true }
-  )
+  watch(profile, () => (isLoggedIn.value = !!profile.value.name), {
+    immediate: true
+  })
 
-  return { isLoggedIn, login, logout }
+  return { isLoggedIn, login, logout, profile, cookies, grades }
 })
 
 export const useMyTheme = createGlobalState(() => {

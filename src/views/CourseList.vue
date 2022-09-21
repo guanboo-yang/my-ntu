@@ -8,9 +8,18 @@
         v-for="course in data"
         :key="course.ser_no"
         :title="course.cou_cname"
-        :subtitle="`${course.ser_no} ${course.tea_cname} ${course.cls_time} ${
-          course.cou_code
-        } ${course.dpt_abbr.trim()}${course.cou_teacno}`"
+        :subtitle="
+          course.ser_no +
+          ' ' +
+          course.tea_cname +
+          ' ' +
+          course.cls_time +
+          ' ' +
+          course.cou_code +
+          ' ' +
+          course.dpt_abbr.trim() +
+          course.cou_teacno
+        "
         prepend-avatar="/ntu.png"
         style="padding: 8px 16px"
         @click="showInfo(course)"

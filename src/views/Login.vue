@@ -98,7 +98,7 @@ const { isFetching, execute, canAbort, abort } = useFetch(
     },
     afterFetch: ({ data, response }) => {
       login(data.cookies)
-      router.push(String(route.query.redirect || '/'))
+      router.replace({ name: '帳號' })
       form.value?.reset()
       form.value?.resetValidation()
       return { data, response }

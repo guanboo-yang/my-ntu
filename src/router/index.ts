@@ -52,8 +52,7 @@ const router = createVueRouter({
 router.beforeEach((to, from, next) => {
   console.debug('routing from', from.path, 'to', to.path)
   const { isLoggedIn } = useUser()
-  if (to.meta.requiresAuth && !isLoggedIn.value)
-    next({ name: '登入', query: { redirect: to.fullPath } })
+  if (to.meta.requiresAuth && !isLoggedIn.value) next({ name: '登入' })
   else if (to.name === '登入' && isLoggedIn.value)
     next(String(to.query.redirect) || '/')
   else next()

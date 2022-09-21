@@ -4,12 +4,12 @@
   >
     <v-tabs v-model="tab" centered bg-color="primary" hide-slider>
       <v-tab value="summary">總覽</v-tab>
-      <v-tab v-for="option of options" :key="option" :value="option">
+      <v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
+      <v-tab v-else v-for="option of options" :key="option" :value="option">
         {{ grades[option]?.year }}學年
         <br />
         {{ grades[option]?.semester === '1' ? '上學期' : '下學期' }}
       </v-tab>
-      <v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
     </v-tabs>
     <v-window v-model="tab" style="flex: 1">
       <v-window-item value="summary" style="text-align: center">
@@ -19,16 +19,15 @@
           style="height: 200px"
         />
         <template v-else-if="error">
-          <p style="padding: 50px 0 10px 0">爬取失敗... {{ error }}</p>
-          <v-btn color="primary" @click="execute()" style="margin: 5px">
+          <p style="padding-top: 50px">爬取失敗... {{ error }}</p>
+          <v-btn color="primary" @click="execute()" style="margin: 15px 5px">
             重新爬取
           </v-btn>
           <v-btn
             color="primary"
             @click="logout"
-            :to="{ name: '登入', query: { redirect: '/grades' } }"
-            replace
-            style="margin: 5px"
+            style="margin: 15px 5px"
+            :to="{ name: '帳號' }"
           >
             重新登入
           </v-btn>
@@ -118,31 +117,12 @@
 </template>
 
 <script setup lang="ts">
-import { useFetch, useStorage } from '@vueuse/core'
+import { useFetch } from '@vueuse/core'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import DataFooter from '../components/DataFooter.vue'
 import { useUser } from '../hooks'
 
-type Grades = {
-  [key: string]: {
-    courses: {
-      name: string
-      credits: number
-      grade: number
-    }[]
-    semester: string
-    year: string
-    gpa: string
-    rank: string
-    credits: string
-  }
-}
-
-const grades = useStorage<Grades>('grades', {})
-
-const cookies = useStorage<any[]>('cookies', [])
-
-const { logout } = useUser()
+const { logout, grades, cookies } = useUser()
 
 const tab = ref<string>('summary')
 const { error, isFetching, execute, canAbort, abort } = useFetch(

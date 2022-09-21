@@ -1,8 +1,5 @@
 export const links: {
-  [key: string]: {
-    name: string
-    url: string
-  }[]
+  [key: string]: { name: string; url: string }[]
 } = {
   '13088': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/18693' }],
   '20938': [
@@ -11,9 +8,10 @@ export const links: {
   ],
   '32336': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19828' },
+    { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl' },
     {
-      name: 'Website',
-      url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl'
+      name: 'Youtube',
+      url: 'https://www.youtube.com/watch?v=rrw0IIEVEUo&list=PLOAQYZPRn2V5yumEV1Wa4JvRiDluf83vn'
     }
   ],
   '44602': [],
