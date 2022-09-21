@@ -17,7 +17,7 @@
       />
     </v-list>
     <v-dialog v-model="dialog">
-      <v-card v-if="course" width="350" style="margin: auto">
+      <v-card v-if="course" width="350">
         <v-card-item>
           <v-icon
             :icon="mdiClose"
@@ -25,19 +25,17 @@
             style="float: right; margin: 4px"
             @click="dialog = false"
           />
-          <v-card-title style="padding-bottom: 0">
+          <v-card-title>
             {{ course.cou_cname }}
           </v-card-title>
           <v-card-subtitle style="padding-bottom: 0">
             {{ course.cou_ename }}
           </v-card-subtitle>
           <v-card-subtitle>
-            <span>{{ course.cls_time }}</span>
-            <span class="dot" v-if="course.tea_cname">
-              {{ course.tea_cname }}
-            </span>
-            <span class="dot" v-if="course.credit">
-              {{ course.credit }} 學分
+            <span> {{ course.tea_cname.trim() }} </span>
+            <span class="dot">{{ course.credit }}學分</span>
+            <span class="dot" v-if="course.cls_time.trim()">
+              {{ course.cls_time.trim() }}
             </span>
             <!-- <span class="dot" v-if="course.visit">旁聽</span> -->
           </v-card-subtitle>
@@ -127,5 +125,9 @@ onBeforeUnmount(() => canAbort && abort())
 }
 :deep(.v-list-item-subtitle) {
   font-size: 12px;
+}
+.v-dialog :deep(.v-overlay__content) {
+  margin: 0;
+  width: unset;
 }
 </style>
