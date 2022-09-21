@@ -76,18 +76,7 @@ import { onBeforeUnmount, ref } from 'vue'
 import { mdiClose } from '@mdi/js'
 import { links } from '../data'
 import { linkToColor } from '../utils'
-
-type CourseInfo = {
-  ser_no: string
-  cou_code: string
-  cou_cname: string
-  cou_ename: string
-  dpt_abbr: string
-  cou_teacno: string
-  tea_cname: string
-  cls_time: string
-  credit: string
-}
+import { CourseInfo } from '../interfaces'
 
 const dialog = ref(false)
 const course = ref<CourseInfo>()

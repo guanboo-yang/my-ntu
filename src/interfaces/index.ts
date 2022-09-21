@@ -1,8 +1,3 @@
-type Link = {
-  name: string
-  url: string
-}
-
 export type Course = {
   id: number
   name: string
@@ -11,13 +6,19 @@ export type Course = {
   professor?: string
   credits?: number
   score?: string
-  links?: Link[]
   visit?: boolean
 }
 
-export type CourseInfo = Course & {
-  time: number[]
-  location: string
+export type CourseInfo = {
+  ser_no: string
+  cou_code: string
+  cou_cname: string
+  cou_ename: string
+  dpt_abbr: string
+  cou_teacno: string
+  tea_cname: string
+  cls_time: string
+  credit: string
 }
 
 export type Semester = {
@@ -41,4 +42,21 @@ export type Profile = {
   english?: string
   address?: string
   identity?: string
+}
+
+export type College = {
+  name: string
+}
+
+export type Department = {
+  id: string
+  college_id: string
+  name_short: string | null
+  name_full: string
+  name_alt: string | null
+}
+
+export type Category = {
+  code: string
+  full_name: string
 }
