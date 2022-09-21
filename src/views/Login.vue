@@ -1,6 +1,6 @@
 <template>
   <v-container style="text-align: center">
-    <v-card>
+    <v-card style="transition: none">
       <v-card-item>
         <h3 style="margin: 10px 0 20px 0">登入學校帳號</h3>
         <v-form
@@ -15,6 +15,7 @@
             variant="outlined"
             density="compact"
             label="學號"
+            autocomplete="username"
             :rules="[
               v => !!v || '學號不可為空',
               v => v.length === 9 || '學號長度為9',
@@ -29,6 +30,7 @@
             variant="outlined"
             density="compact"
             label="密碼"
+            autocomplete="current-password"
             :rules="[
               v => !!v || '密碼不可為空',
               v => v.length >= 5 || '密碼長度至少為5'
@@ -39,7 +41,6 @@
             :type="showPass ? 'text' : 'password'"
             style="margin-bottom: 5px"
           />
-          <!-- @click="reset" -->
           <v-btn color="primary" type="reset" style="margin: 0 5px 10px 5px">
             重置
           </v-btn>
@@ -107,3 +108,9 @@ const { isFetching, execute, canAbort, abort } = useFetch(
 
 onBeforeUnmount(() => canAbort && abort())
 </script>
+
+<style scoped>
+:deep(.v-btn__overlay) {
+  background-color: rgb(var(--v-theme-background));
+}
+</style>

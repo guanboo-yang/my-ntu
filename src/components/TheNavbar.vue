@@ -36,7 +36,7 @@ const name = ref('')
 
 const routes = router
   .getRoutes()
-  .filter((route: RouteRecordRaw) => route.meta?.bottom)
+  .filter((route: RouteRecordRaw) => route.meta?.icon)
 
 watch(
   isLoggedIn,

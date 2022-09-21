@@ -11,26 +11,26 @@ const routes: Array<RouteRecordRaw> = [
     path: '/profile',
     name: '帳號',
     component: () => import('../views/Profile.vue'),
-    meta: { icon: mdiAccount, bottom: true, requiresAuth: true }
+    meta: { icon: mdiAccount, requiresAuth: true }
   },
   {
     path: '/grades',
     name: '成績',
     component: () => import('../views/Grades.vue'),
-    meta: { icon: mdiChartBar, bottom: true, requiresAuth: true }
+    meta: { icon: mdiChartBar, requiresAuth: true }
   },
   {
     path: '/timetable',
     name: '行事曆',
     component: () => import('../views/CourseList.vue'),
-    meta: { icon: mdiCalendarBlank, bottom: true }
+    meta: { icon: mdiCalendarBlank }
   },
   {
     path: '/',
     name: '連結',
     // alias: '/home',
     component: () => import('../views/Links.vue'),
-    meta: { icon: mdiLink, bottom: true }
+    meta: { icon: mdiLink }
   },
   {
     path: '/login',
@@ -50,7 +50,7 @@ const router = createVueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log('beforeEach', to, from)
+  console.debug('routing from', from.path, 'to', to.path)
   const { isLoggedIn } = useUser()
   if (to.meta.requiresAuth && !isLoggedIn.value)
     next({ name: '登入', query: { redirect: to.fullPath } })
