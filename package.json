@@ -7,8 +7,9 @@
     "dev": "netlify dev",
     "start": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "build:no-check": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check ."
   },
   "dependencies": {
     "@vueuse/core": "^9.2.0",

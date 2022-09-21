@@ -130,4 +130,7 @@ onBeforeUnmount(() => canAbort && abort())
   margin: 0;
   width: unset;
 }
+.v-dialog :deep(.v-overlay__scrim) {
+  background: #000;
+}
 </style>

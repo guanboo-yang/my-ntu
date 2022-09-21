@@ -1,0 +1,9 @@
+# Files Prettier should not format
+**/*.log
+**/.DS_Store
+*.
+node_modules
+dist
+dev-dist
+.netlify
+pnpm-lock.yaml
