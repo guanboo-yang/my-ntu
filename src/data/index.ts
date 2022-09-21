@@ -10,13 +10,17 @@ export const links: {
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19828' },
     { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl' },
     {
-      name: 'Youtube',
-      url: 'https://www.youtube.com/watch?v=rrw0IIEVEUo&list=PLOAQYZPRn2V5yumEV1Wa4JvRiDluf83vn'
+      name: 'Video',
+      url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl#syllabus'
     }
   ],
   '44602': [],
   '48143': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20138' }],
-  '51383': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20073' }],
+  '51383': [
+    { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20073' },
+    { name: 'Website', url: 'https://speech.ee.ntu.edu.tw/DSP2022Autumn' },
+    { name: 'Video', url: 'https://speech.ee.ntu.edu.tw/DSP2022Autumn#video' }
+  ],
   '57575': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16494' }],
   '67883': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' }],
   '77445': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19398' }],

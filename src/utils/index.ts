@@ -1,3 +1,7 @@
+import { useMyTheme } from '../hooks'
+
+const { mode } = useMyTheme()
+
 export const generateRandomColor = () =>
   `hsla(${Math.random() * 360}, ${40 + 50 * Math.random()}%, 50%, 25%)`
 
@@ -27,4 +31,24 @@ export const parseInfo = (info: string) => {
     })
   }
   return ret
+}
+
+const linkColorMap = new Map<string, { light: string; dark: string }>([
+  ['Ceiba', { light: '#82c400', dark: '' }],
+  ['Cool', { light: '#003366', dark: '' }],
+  ['Gather Town', { light: '#00a0e9', dark: '' }],
+  ['Github', { light: '', dark: '' }],
+  ['Gradescope', { light: '#1ca0a0', dark: '' }],
+  ['Judge', { light: '', dark: '' }],
+  ['Mail', { light: '', dark: '' }],
+  ['Meet', { light: '', dark: '' }],
+  ['Slido', { light: '#39ac37', dark: '' }],
+  ['Webex', { light: '#00bbed', dark: '' }],
+  ['YouTube', { light: '#ff3200', dark: '' }]
+])
+
+export const linkToColor = (link: string) => {
+  return mode.value === 'dark'
+    ? linkColorMap.get(link)?.dark || '#fff'
+    : linkColorMap.get(link)?.light || '#000'
 }

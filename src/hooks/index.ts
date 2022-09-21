@@ -2,7 +2,6 @@ import {
   createGlobalState,
   useColorMode,
   useCycleList,
-  useLocalStorage,
   useStorage
 } from '@vueuse/core'
 import { useTheme } from 'vuetify'

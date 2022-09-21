@@ -75,6 +75,7 @@ import { useFetch } from '@vueuse/core'
 import { onBeforeUnmount, ref } from 'vue'
 import { mdiClose } from '@mdi/js'
 import { links } from '../data'
+import { linkToColor } from '../utils'
 
 type CourseInfo = {
   ser_no: string
@@ -102,24 +103,6 @@ const { data, isFetching, canAbort, abort } = useFetch(
 const showInfo = (t: CourseInfo) => {
   course.value = t
   dialog.value = true
-}
-
-const linkColorMap = new Map<string, string>([
-  ['Ceiba', '#82c400'],
-  ['Cool', '#003366'],
-  ['Gather Town', '#00a0e9'],
-  ['Github', ''],
-  ['Gradescope', '#1ca0a0'],
-  ['Judge', ''],
-  ['Mail', ''],
-  ['Meet', ''],
-  ['Slido', '#39ac37'],
-  ['Webex', '#00bbed'],
-  ['YouTube', '#ff3200']
-])
-
-const linkToColor = (link: string) => {
-  return linkColorMap.get(link) || '#000'
 }
 
 onBeforeUnmount(() => canAbort && abort())
