@@ -1,6 +1,6 @@
 import {
   createRouter as createVueRouter,
-  createWebHashHistory,
+  createWebHistory,
   RouteRecordRaw
 } from 'vue-router'
 import { mdiCalendarBlank, mdiAccount, mdiLink, mdiChartBar } from '@mdi/js'
@@ -8,44 +8,43 @@ import { useUser } from '../hooks'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/profile',
     name: '帳號',
+    path: '/profile',
     component: () => import('../views/Profile.vue'),
     meta: { icon: mdiAccount, requiresAuth: true }
   },
   {
-    path: '/grades',
     name: '成績',
+    path: '/grades',
     component: () => import('../views/Grades.vue'),
     meta: { icon: mdiChartBar, requiresAuth: true }
   },
   {
+    name: '課表',
     path: '/timetable',
-    name: '行事曆',
     component: () => import('../views/CourseList.vue'),
-    meta: { icon: mdiCalendarBlank }
+    meta: { icon: mdiCalendarBlank, requiresAuth: true }
   },
   {
-    path: '/',
     name: '連結',
-    // alias: '/home',
+    path: '/',
     component: () => import('../views/Links.vue'),
     meta: { icon: mdiLink }
   },
   {
-    path: '/login',
     name: '登入',
+    path: '/login',
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/:pathMatch(.*)*',
     name: '404',
+    path: '/:pathMatch(.*)*',
     component: () => import('../views/NotFound.vue')
   }
 ]
 
 const router = createVueRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
@@ -61,7 +60,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(to => {
   // if (to.name === 'Watch') window.dispatchEvent(new HashChangeEvent('hashchange'))
   document.title = `${String(to.name)} | 臺灣大學`
-  window.scrollTo({ top: 0 /* , behavior: 'smooth' */ })
+  window.scrollTo({ top: 0 })
 })
 
 export const createRouter = () => router
