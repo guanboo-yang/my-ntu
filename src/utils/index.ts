@@ -2,9 +2,6 @@ import { useMyTheme } from '../hooks'
 
 const { mode } = useMyTheme()
 
-export const generateRandomColor = () =>
-  `hsla(${Math.random() * 360}, ${40 + 50 * Math.random()}%, 50%, 25%)`
-
 // 二2,3,4(資104) -> [{ time: 17, span: 3, location: '資104' }]
 // 二6,7(共202)五6,7(共304) -> [{ time: 21, span: 2, location: '共202' }, { time: 66, span: 2, location: '共304' }]
 // 二9,10,A,B,C,D(共202) -> [{ time: 24, span: 6, location: '共202' }]
@@ -51,4 +48,15 @@ export const linkToColor = (link: string) => {
   return mode.value === 'dark'
     ? linkColorMap.get(link)?.dark || '#fff'
     : linkColorMap.get(link)?.light || '#000'
+}
+
+const courseColorMap = new Map<string, string>()
+
+export const getCourseColor = (name: string) => {
+  if (!courseColorMap.has(name))
+    courseColorMap.set(
+      name,
+      `hsla(${Math.random() * 360}, ${40 + 50 * Math.random()}%, 50%, 15%)`
+    )
+  return courseColorMap.get(name)
 }

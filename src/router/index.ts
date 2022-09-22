@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: '課表',
     path: '/timetable',
-    component: () => import('../views/CourseList.vue'),
+    component: () => import('../views/Timetable.vue'),
     meta: { icon: mdiCalendarBlank, requiresAuth: true }
   },
   {

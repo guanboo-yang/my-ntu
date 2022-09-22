@@ -40,4 +40,28 @@ const { isLoggedIn } = useUser()
     opacity: 0;
   }
 }
+.v-tabs .v-btn {
+  &.v-btn--active .v-btn__overlay {
+    background: transparent !important;
+  }
+  &:not(.v-btn--active) {
+    opacity: 0.6;
+  }
+}
+.v-tab {
+  border-radius: 0;
+  letter-spacing: 0;
+  min-width: 80px;
+}
+.v-window .v-window__container {
+  height: 100%;
+  .v-window-item {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
 </style>

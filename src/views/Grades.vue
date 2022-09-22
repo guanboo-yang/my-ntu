@@ -166,30 +166,6 @@ onBeforeUnmount(() => canAbort && abort())
 :deep(.v-list-item-subtitle) {
   font-size: 14px;
 }
-.v-tabs .v-btn {
-  &.v-btn--active :deep(.v-btn__overlay) {
-    background: transparent !important;
-  }
-  &:not(.v-btn--active) {
-    opacity: 0.6;
-  }
-}
-.v-tab {
-  border-radius: 0;
-  letter-spacing: 0;
-  min-width: 80px;
-}
-.v-window :deep(.v-window__container) {
-  height: 100%;
-  .v-window-item {
-    height: 100%;
-    overflow-y: auto;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-}
 .v-list-item {
   padding: 6px 16px !important;
   margin: 12px;

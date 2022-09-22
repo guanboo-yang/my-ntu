@@ -29,6 +29,26 @@ export const links: {
   '97112': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19580' }]
 }
 
+export const times: {
+  [key: string]: string
+} = {
+  '0': '07:10',
+  '1': '08:10',
+  '2': '09:10',
+  '3': '10:20',
+  '4': '11:20',
+  '5': '12:20',
+  '6': '13:20',
+  '7': '14:20',
+  '8': '15:30',
+  '9': '16:30',
+  X: '17:30',
+  A: '18:25',
+  B: '19:20',
+  C: '20:15',
+  D: '21:10'
+}
+
 export const departments: Department[] = [
   {
     id: '0020',
