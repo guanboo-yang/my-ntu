@@ -14,14 +14,14 @@ export const handler: Handler = async (event, _context) => {
     case 'OPTIONS':
       return {
         statusCode: 200,
-        body: 'This was a preflight request',
+        body: JSON.stringify({ message: 'This was a preflight request' }),
         headers
       }
     case 'POST':
       if (!event.body) {
         return {
           statusCode: 400,
-          body: 'Bad Request',
+          body: JSON.stringify({ message: 'Bad Request' }),
           headers
         }
       }
@@ -88,7 +88,7 @@ export const handler: Handler = async (event, _context) => {
     default:
       return {
         statusCode: 405,
-        body: 'Method Not Allowed',
+        body: JSON.stringify({ message: 'Method Not Allowed' }),
         headers
       }
   }
