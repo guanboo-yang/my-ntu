@@ -25,6 +25,12 @@ export type CourseInfo = {
   day4: string
   day5: string
   day6: string
+  clsrom_1: string
+  clsrom_2: string
+  clsrom_3: string
+  clsrom_4: string
+  clsrom_5: string
+  clsrom_6: string
 }
 
 export type Semester = {
