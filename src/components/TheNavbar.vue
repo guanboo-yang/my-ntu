@@ -10,7 +10,7 @@
       @click="nextMode()"
     />
   </v-app-bar>
-  <v-bottom-navigation bgColor="primary" mandatory grow>
+  <v-bottom-navigation bgColor="primary" mandatory grow class="elevation-24">
     <v-btn v-for="link in routes" :key="link.name" :to="{ name: link.name }">
       <v-icon size="large">{{ link.meta?.icon }}</v-icon>
       <span style="margin-top: 2px; text-transform: uppercase">

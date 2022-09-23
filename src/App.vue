@@ -40,6 +40,9 @@ const { isLoggedIn } = useUser()
     opacity: 0;
   }
 }
+.v-tabs {
+  z-index: 10;
+}
 .v-tabs .v-btn {
   &.v-btn--active .v-btn__overlay {
     background: transparent !important;

@@ -1,20 +1,21 @@
 <template>
-  <div>
+  <div
+    style="display: flex; flex-direction: column; height: calc(100vh - 112px)"
+  >
     <v-tabs v-model="tab" bg-color="primary" hide-slider>
-      <v-tab value="table">時數表</v-tab>
+      <v-tab value="table">課表</v-tab>
       <v-tab value="list">課程清單</v-tab>
       <v-btn
-        class="v-tab"
         variant="text"
         :icon="mdiPlus"
         size="small"
         @click.prevent=""
-        min-width="70px"
+        style="margin: auto; margin-right: 10px"
       />
     </v-tabs>
-    <v-window v-model="tab" :touch="false">
+    <v-window v-model="tab" :touch="false" style="flex: 1">
       <v-window-item value="table">
-        <v-table fixed-header>
+        <v-table fixed-header height="calc(100vh - 160px)">
           <thead>
             <tr>
               <th>111-1</th>
@@ -209,9 +210,8 @@ onBeforeUnmount(() => canAbort && abort())
   background: #000;
 }
 .v-table {
-  $width: 42px;
-  $background: rgb(var(--v-theme-background));
-  background-color: $background;
+  $width: 40px;
+  background-color: rgb(var(--v-theme-background));
   border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
   :deep(.v-table__wrapper) {
     scrollbar-width: none;
@@ -230,7 +230,7 @@ onBeforeUnmount(() => canAbort && abort())
       border-right: thin solid
         rgba(var(--v-border-color), var(--v-border-opacity));
       &:first-child {
-        z-index: 1000;
+        z-index: 1;
         min-width: $width;
         position: sticky;
         left: 0;
@@ -247,19 +247,16 @@ onBeforeUnmount(() => canAbort && abort())
     }
     th {
       height: 42px !important;
-      color: #fff !important;
-      background-color: rgb(var(--v-theme-primary)) !important;
       text-align: center !important;
       &:first-child {
-        z-index: 1001;
+        z-index: 2;
       }
     }
     td {
       vertical-align: top;
       height: unset !important;
-      background-color: $background;
+      background-color: rgb(var(--v-theme-background));
       p {
-        line-height: 1.42;
         &:nth-child(1) {
           opacity: 0.5;
         }
