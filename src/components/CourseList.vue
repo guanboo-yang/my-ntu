@@ -30,8 +30,9 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
 import { CourseInfo } from '../interfaces'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { iconDrag } from '../icons'
+import { useStorage } from '@vueuse/core'
 
 const props = defineProps<{
   data: CourseInfo[]
@@ -39,7 +40,19 @@ const props = defineProps<{
   showInfo: (course: CourseInfo) => void
 }>()
 
-const list = ref<CourseInfo[]>(props.data)
+const orderMap = useStorage<{
+  [key: string]: number
+}>('order', {})
+
+const list = computed(() => {
+  return props.data.sort((a, b) => {
+    const orderA = orderMap.value[a.ser_no] || 0
+    const orderB = orderMap.value[b.ser_no] || 0
+    return orderA - orderB
+  })
+})
+
+const tempOrder = ref<CourseInfo[]>([])
 
 const dragOptions = {
   itemKey: 'ser_no',
@@ -48,18 +61,12 @@ const dragOptions = {
   handle: '.handle',
   // group: 'description',
   // componentData: { type: 'transition-group' },
-  move: (e: any) => (list.value = e.relatedContext.list),
-  onEnd: () => {
-    const orderMap: Record<string, number> = {}
-    list.value.forEach((item, index) => (orderMap[item.ser_no] = index))
-    console.log(JSON.stringify(orderMap))
-  }
+  move: (e: any) => (tempOrder.value = e.relatedContext.list),
+  onEnd: () =>
+    tempOrder.value.forEach(
+      (item, index) => (orderMap.value[item.ser_no] = index)
+    )
 }
-
-watch(
-  () => props.isFetching,
-  () => (list.value = props.data)
-)
 </script>
 
 <style scoped>
