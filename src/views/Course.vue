@@ -66,6 +66,9 @@
               >
                 {{ link.name }}
               </v-chip>
+              <v-chip size="small" style="width: 26px; padding: 0 9px">
+                +
+              </v-chip>
             </v-chip-group>
           </div>
         </v-card-item>

@@ -56,7 +56,7 @@ export const getCourseColor = (name: string) => {
   if (!courseColorMap.has(name))
     courseColorMap.set(
       name,
-      `hsla(${Math.random() * 360}, ${40 + 50 * Math.random()}%, 50%, 15%)`
+      `hsla(${Math.random() * 360}, ${40 + 50 * Math.random()}%, 50%, 20%)`
     )
   return courseColorMap.get(name)
 }

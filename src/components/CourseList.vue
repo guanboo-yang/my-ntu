@@ -3,40 +3,23 @@
     <div v-if="isFetching" style="text-align: center">
       <v-progress-circular indeterminate style="height: 200px" />
     </div>
-    <draggable
-      v-else
-      :list="list"
-      item-key="cou_cname"
-      class="list-group"
-      ghost-class="ghost"
-      :move="checkMove"
-      @end="onEnd"
-      handle=".handle"
-    >
+    <draggable v-else :list="list" v-bind="dragOptions">
       <template #item="{ element }">
         <v-list-item
           :title="element.cou_cname"
-          :subtitle="
-            element.ser_no +
-            ' ' +
-            element.tea_cname +
-            ' ' +
-            element.cls_time +
-            ' ' +
-            element.cou_code +
-            ' ' +
-            element.dpt_abbr.trim() +
-            element.cou_teacno
-          "
+          v-ripple="false"
           prepend-avatar="/ntu.png"
           style="padding: 8px 16px"
           class="list-group-item"
           @click="showInfo(element)"
         >
+          <v-list-item-subtitle>
+            {{ element.tea_cname }}
+            {{ element.cls_time }}
+            {{ element.dpt_abbr.trim() }}{{ element.cou_teacno }}
+          </v-list-item-subtitle>
           <template #append>
-            <v-icon class="handle" size="small">
-              {{ iconDrag }}
-            </v-icon>
+            <v-icon class="handle" size="small" :icon="iconDrag" />
           </template>
         </v-list-item>
       </template>
@@ -56,11 +39,22 @@ const props = defineProps<{
   showInfo: (course: CourseInfo) => void
 }>()
 
-const list = ref<CourseInfo[]>([])
+const list = ref<CourseInfo[]>(props.data)
 
-const checkMove = (e: any) => (list.value = e.relatedContext.list)
-const onEnd = () =>
-  console.log(JSON.stringify(list.value.map((e: any) => e.cou_cname.trim())))
+const dragOptions = {
+  itemKey: 'ser_no',
+  animation: 200,
+  ghostClass: 'ghost',
+  handle: '.handle',
+  // group: 'description',
+  // componentData: { type: 'transition-group' },
+  move: (e: any) => (list.value = e.relatedContext.list),
+  onEnd: () => {
+    const orderMap: Record<string, number> = {}
+    list.value.forEach((item, index) => (orderMap[item.ser_no] = index))
+    console.log(JSON.stringify(orderMap))
+  }
+}
 
 watch(
   () => props.isFetching,
@@ -74,5 +68,13 @@ watch(
 }
 :deep(.v-list-item-subtitle) {
   font-size: 12px;
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+}
+.handle {
+  cursor: move;
+}
+.ghost {
+  opacity: 0;
 }
 </style>
