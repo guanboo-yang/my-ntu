@@ -23,7 +23,7 @@
       </v-window-item>
       <v-window-item value="list">
         <course-list
-          :data="data"
+          :data="data || []"
           :isFetching="isFetching"
           :showInfo="showInfo"
         />
@@ -85,7 +85,7 @@ import { linkToColor } from '../utils'
 import { CourseInfo } from '../interfaces'
 import { mdiPlus } from '@mdi/js'
 
-const tab = ref('table')
+const tab = ref('list')
 const dialog = ref(false)
 const course = ref<CourseInfo>()
 const timetable = ref<{
