@@ -8,7 +8,7 @@
       :data="props.data"
       sortKey="ser_no"
       storageKey="courseOrder"
-      :onClick="props.showInfo"
+      :itemClick="props.showInfo"
     >
       <template #default="{ element }">
         {{ element.cou_cname }}

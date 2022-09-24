@@ -9,7 +9,7 @@
           :href="element.href"
           target="_blank"
           rel="noopener"
-          @click="props.onClick?.(element)"
+          @click="props.itemClick?.(element)"
         >
           <v-list-item-title>
             <slot :element="element" />
@@ -36,7 +36,7 @@ const props = defineProps<{
   data: any[]
   sortKey: string
   storageKey: string
-  onClick?: (item: any) => void
+  itemClick?: (item: any) => void
 }>()
 
 const orderMap = useStorage<{
