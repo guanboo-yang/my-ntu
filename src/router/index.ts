@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createVueRouter({
-  history: createWebHistory(),
+  history: createWebHistory(window.location.pathname),
   routes
 })
 
