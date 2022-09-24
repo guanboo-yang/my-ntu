@@ -5,12 +5,30 @@
     <v-tabs v-model="tab" bg-color="primary" hide-slider>
       <v-tab value="table">課表</v-tab>
       <v-tab value="list">課程清單</v-tab>
-      <v-btn
+      <!-- <v-btn
         variant="text"
         :icon="mdiPlus"
         size="small"
         @click.prevent=""
-        style="margin: auto; margin-right: 10px"
+        style="margin: auto; margin-right: 0"
+      />
+      <v-btn
+        variant="text"
+        :icon="mdiContentSave"
+        :loading="isSaving"
+        :disabled="isSaving"
+        size="small"
+        @click.prevent="saveDomAsImage"
+        style="margin: auto 10px auto 0"
+      /> -->
+      <v-btn
+        variant="text"
+        :icon="mdiContentSave"
+        :loading="isSaving"
+        :disabled="isSaving"
+        size="small"
+        @click.prevent="saveDomAsImage"
+        style="margin: auto 10px auto auto"
       />
     </v-tabs>
     <v-window v-model="tab" :touch="false" style="flex: 1">
@@ -19,6 +37,7 @@
           :timetable="timetable"
           :isFetching="isFetching"
           :showInfo="showInfo"
+          class="save-to-image"
         />
       </v-window-item>
       <v-window-item value="list">
@@ -26,6 +45,7 @@
           :data="data || []"
           :isFetching="isFetching"
           :showInfo="showInfo"
+          class="save-to-image"
         />
       </v-window-item>
     </v-window>
@@ -86,11 +106,14 @@ import CourseList from '../components/CourseList.vue'
 import { links } from '../data'
 import { linkToColor } from '../utils'
 import { CourseInfo } from '../interfaces'
-import { mdiPlus } from '@mdi/js'
+import { mdiPlus, mdiContentSave } from '@mdi/js'
+import { toPng } from 'html-to-image'
 
 const tab = ref('list')
 const dialog = ref(false)
 const course = ref<CourseInfo>()
+const isSaving = ref(false)
+
 const timetable = ref<{
   [key: string]: {
     [key: string]:
@@ -138,6 +161,23 @@ const showInfo = (t: CourseInfo) => {
   dialog.value = true
 }
 
+const saveDomAsImage = () => {
+  if (isSaving.value) return
+  isSaving.value = true
+  const selector =
+    tab.value === 'table' ? '.save-to-image table' : '.save-to-image.v-list'
+  const dom = document.querySelector(selector) as HTMLElement
+  if (!dom) return
+  toPng(dom)
+    .then(dataUrl => {
+      const link = document.createElement('a')
+      link.download = '課表.png'
+      link.href = dataUrl
+      link.click()
+    })
+    .finally(() => (isSaving.value = false))
+}
+
 onBeforeUnmount(() => canAbort && abort())
 </script>
 
@@ -151,5 +191,39 @@ onBeforeUnmount(() => canAbort && abort())
 }
 .v-dialog :deep(.v-overlay__scrim) {
   background: #000;
+}
+</style>
+
+<style>
+/* devanagari */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJbecnFHGPezSQ.woff2)
+    format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8,
+    U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2)
+    format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2)
+    format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 </style>

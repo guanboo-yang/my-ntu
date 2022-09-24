@@ -1,7 +1,7 @@
 {
   "name": "my-ntu",
   "private": true,
-  "version": "1.10.0",
+  "version": "1.10.1",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
@@ -15,6 +15,7 @@
     "@vueuse/core": "^9.2.0",
     "@vueuse/router": "^9.2.0",
     "cheerio": "^1.0.0-rc.12",
+    "html-to-image": "^1.10.8",
     "node-fetch-cookies": "^2.0.4",
     "vue": "^3.2.39",
     "vue-router": "4",

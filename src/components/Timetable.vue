@@ -74,7 +74,6 @@ defineProps<{
 <style scoped lang="scss">
 .v-table {
   $width: 40px;
-  background-color: rgb(var(--v-theme-background));
   border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
   :deep(.v-table__wrapper) {
     scrollbar-width: none;
@@ -83,6 +82,7 @@ defineProps<{
     }
   }
   tr {
+    background-color: rgb(var(--v-theme-background));
     &:hover {
       background: none !important;
     }
