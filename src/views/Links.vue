@@ -1,24 +1,24 @@
 <template>
-  <v-list>
-    <v-list-item
-      v-for="link in links"
-      :key="link.title"
-      :title="link.title"
-      :subtitle="link.subtitle"
-      :append-icon="mdiChevronRight"
-      prepend-avatar="/ntu.png"
-      style="padding: 8px 16px"
-      :href="link.href"
-      target="_blank"
-      rel="noopener"
-    />
-  </v-list>
+  <draggable :data="links" sortKey="href" storageKey="linkOrder">
+    <template #default="{ element }">
+      {{ element.title }}
+    </template>
+    <template #subtitle="{ element }">
+      {{ element.subtitle }}
+    </template>
+  </draggable>
 </template>
 
 <script setup lang="ts">
-import { mdiChevronRight } from '@mdi/js'
+import Draggable from '../components/Draggable.vue'
 
-const links = [
+type Link = {
+  title: string
+  subtitle?: string
+  href: string
+}
+
+const links: Link[] = [
   {
     title: '臺灣大學電子郵件系統',
     subtitle: 'NTU Mail',
@@ -54,12 +54,3 @@ const links = [
   }
 ]
 </script>
-
-<style scoped>
-:deep(.v-list-item-title) {
-  font-size: 14px;
-}
-:deep(.v-list-item-subtitle) {
-  font-size: 12px;
-}
-</style>
