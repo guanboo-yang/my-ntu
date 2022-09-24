@@ -23,7 +23,6 @@ const { isLoggedIn } = useUser()
 
 <style lang="scss">
 :root {
-  /* font-family: Poppins, Inter, Avenir, Helvetica, Arial, sans-serif; */
   font-synthesis: none;
 }
 .v-theme--dark,
@@ -43,7 +42,7 @@ const { isLoggedIn } = useUser()
 .v-tabs {
   z-index: 10;
 }
-.v-tabs .v-btn {
+.v-tabs .v-tab.v-btn {
   &.v-btn--active .v-btn__overlay {
     background: transparent !important;
   }

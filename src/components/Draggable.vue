@@ -5,12 +5,13 @@
         <v-list-item
           v-ripple="false"
           prepend-avatar="/ntu.png"
-          style="padding: 8px 16px"
           :href="element.href"
           target="_blank"
           rel="noopener"
           @click="props.itemClick?.(element)"
+          style="padding: 8px 16px; max-height: 999999px"
         >
+          <!-- prevent chrome mobile change font-size -->
           <v-list-item-title>
             <slot :element="element" />
           </v-list-item-title>
@@ -71,7 +72,7 @@ const dragOptions = {
   font-size: 14px;
 }
 :deep(.v-list-item-subtitle) {
-  font-size: 12px;
+  font-size: 13px;
 }
 .handle {
   cursor: move;
