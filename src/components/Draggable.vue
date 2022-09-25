@@ -4,13 +4,21 @@
       <template #item="{ element }">
         <v-list-item
           v-ripple="false"
-          prepend-avatar="/ntu.png"
           :href="element.href"
           target="_blank"
           rel="noopener"
           @click="props.itemClick?.(element)"
           style="padding: 8px 16px; max-height: 999999px"
         >
+          <template #prepend>
+            <v-avatar size="40">
+              <v-img src="/ntu.webp">
+                <template #sources>
+                  <source srcset="/ntu.png" />
+                </template>
+              </v-img>
+            </v-avatar>
+          </template>
           <!-- prevent chrome mobile change font-size -->
           <v-list-item-title>
             <slot :element="element" />

@@ -7,6 +7,7 @@
     <v-btn
       size="small"
       :icon="mode === 'light' ? mdiBrightness2 : mdiWhiteBalanceSunny"
+      aria-label="Toggle light/dark theme"
       @click="nextMode()"
     />
   </v-app-bar>

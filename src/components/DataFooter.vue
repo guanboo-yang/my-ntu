@@ -4,9 +4,9 @@
       <span>資料來源：{{ source }}</span>
       <br />
     </template>
-    <a @click="execute()">
+    <span @click="execute()">
       <slot />
-    </a>
+    </span>
   </p>
 </template>
 
@@ -23,7 +23,7 @@ p {
   font-size: 14px;
   text-align: center;
 }
-a {
+span {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
