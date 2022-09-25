@@ -225,7 +225,9 @@ const clickAddCourse = () => {
 const addCourse = () => {
   addCourseDialog.value = false
   if (!addCourseCode.value) return
-  ser_no.value = ser_no.value.concat(addCourseCode.value.split(',').map(Number))
+  ser_no.value = Array.from(
+    new Set(ser_no.value.concat(addCourseCode.value.split(',').map(Number)))
+  ).filter(Boolean)
   addCourseCode.value = ''
 }
 
