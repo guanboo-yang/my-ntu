@@ -40,9 +40,9 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: 'pwa.svg',
+            sizes: '155x155',
+            type: 'image/svg',
             purpose: 'any maskable'
           }
         ]
