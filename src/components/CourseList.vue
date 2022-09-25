@@ -16,7 +16,7 @@
       <template #subtitle="{ element }">
         {{ element.tea_cname }}
         {{ element.cls_time }}
-        {{ element.dpt_abbr.trim() }}{{ element.cou_teacno }}
+        {{ element.dpt_abbr?.trim() }}{{ element.cou_teacno }}
       </template>
     </draggable>
   </div>

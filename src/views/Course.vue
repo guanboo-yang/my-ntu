@@ -5,35 +5,29 @@
     <v-tabs v-model="tab" bg-color="primary" hide-slider>
       <v-tab value="table">課表</v-tab>
       <v-tab value="list">課程清單</v-tab>
-      <!-- <v-btn
+      <!-- <v-tab value="search">搜尋</v-tab> -->
+      <v-btn
         variant="text"
         :icon="mdiPlus"
+        :disabled="isSaving || isFetching"
         size="small"
-        @click.prevent=""
+        @click.prevent="clickAddCourse"
         style="margin: auto; margin-right: 0"
       />
       <v-btn
-        variant="text"
-        :icon="mdiContentSave"
-        :loading="isSaving"
-        :disabled="isSaving"
-        size="small"
-        @click.prevent="saveDomAsImage"
-        style="margin: auto 10px auto 0"
-      /> -->
-      <v-btn
+        v-if="tab === 'table' || tab === 'list'"
         variant="text"
         :icon="mdiContentSave"
         :loading="isSaving"
         :disabled="isSaving || isFetching"
         size="small"
         @click.prevent="saveDomAsImage"
-        style="margin: auto 10px auto auto"
+        style="margin: auto 10px auto 0"
       />
     </v-tabs>
     <v-window v-model="tab" :touch="false" style="flex: 1">
       <v-window-item value="table">
-        <timetable
+        <course-table
           :timetable="timetable"
           :isFetching="isFetching"
           :showInfo="showInfo"
@@ -48,6 +42,9 @@
           class="save-to-image"
         />
       </v-window-item>
+      <!-- <v-window-item value="search">
+        <course-search />
+      </v-window-item> -->
     </v-window>
     <v-dialog v-model="dialog">
       <v-card v-if="course" width="350" max-width="calc(100vw - 60px)">
@@ -61,16 +58,17 @@
           <v-card-title>
             {{ course.cou_cname }}
           </v-card-title>
-          <v-card-subtitle style="padding-bottom: 0">
-            {{ course.cou_ename }}
-          </v-card-subtitle>
           <v-card-subtitle>
-            <span> {{ course.tea_cname.trim() }} </span>
-            <span class="dot">{{ course.credit }}學分</span>
-            <span class="dot" v-if="course.cls_time.trim()">
-              {{ course.cls_time.trim() }}
-            </span>
-            <!-- <span class="dot" v-if="course.visit">旁聽</span> -->
+            <v-row dense>
+              <v-col cols="6">教授：{{ course.tea_cname.trim() }} </v-col>
+              <v-col cols="6"> 學分：{{ course.credit }} </v-col>
+            </v-row>
+            <v-row dense>
+              <v-col cols="6" v-if="course.cls_time.trim()">
+                時間：{{ course.cls_time.trim() }}
+              </v-col>
+              <!-- <v-col cols="6"> 上課地點：{{ course.cls_room.trim() }} </v-col> -->
+            </v-row>
           </v-card-subtitle>
           <v-divider style="margin: 8px 0" />
           <div style="margin: -4px 0 8px 0">
@@ -94,23 +92,64 @@
         </v-card-item>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="addCourseDialog">
+      <v-card width="350" max-width="calc(100vw - 60px)">
+        <v-card-item>
+          <v-icon
+            :icon="mdiClose"
+            size="small"
+            style="float: right; margin-top: 4px"
+            @click="addCourseDialog = false"
+          />
+          <v-card-title> 新增課程 </v-card-title>
+          <v-form
+            ref="form"
+            @submit.prevent="addCourse"
+            style="display: flex; gap: 12px; margin-top: 8px"
+          >
+            <v-text-field
+              v-model="addCourseCode"
+              label="課程流水號"
+              variant="outlined"
+              density="compact"
+              autofocus
+            />
+            <v-btn
+              type="submit"
+              color="primary"
+              variant="tonal"
+              :loading="isFetching"
+              :disabled="isFetching || !addCourseCode"
+              style="height: 40px"
+            >
+              新增
+            </v-btn>
+          </v-form>
+        </v-card-item>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFetch } from '@vueuse/core'
-import { onBeforeUnmount, ref } from 'vue'
+import { useFetch, useStorage } from '@vueuse/core'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { mdiClose } from '@mdi/js'
-import Timetable from '../components/Timetable.vue'
+import CourseTable from '../components/CourseTable.vue'
 import CourseList from '../components/CourseList.vue'
+import CourseSearch from '../components/CourseSearch.vue'
 import { links } from '../data'
 import { linkToColor } from '../utils'
 import { CourseInfo } from '../interfaces'
 import { mdiPlus, mdiContentSave } from '@mdi/js'
 import { toPng } from 'html-to-image'
 
+// 13088, 20938, 32336, 44602, 48143, 51383, 57575, 67883, 77445, 97112
+const ser_no = useStorage<number[]>('courseList', [])
 const tab = ref('list')
 const dialog = ref(false)
+const addCourseDialog = ref(false)
+const addCourseCode = ref('')
 const course = ref<CourseInfo>()
 const isSaving = ref(false)
 
@@ -125,36 +164,37 @@ const timetable = ref<{
   }
 }>({})
 
-const ser_no = [
-  13088, 20938, 32336, 44602, 48143, 51383, 57575, 67883, 77445, 97112
-]
+const url = computed(() => {
+  if (ser_no.value.length === 0) return ''
+  return (
+    import.meta.env.VITE_API_URL + '/course?ser_no=' + ser_no.value.join(',')
+  )
+})
 
-const { data, isFetching, canAbort, abort } = useFetch(
-  import.meta.env.VITE_API_URL + '/course?ser_no=' + ser_no.join(','),
-  {
-    afterFetch: ({ data, response }) => {
-      if (!response.ok) throw new Error(data.message)
-      data.forEach((course: CourseInfo) => {
-        for (let i = 1; i < 7; i++) {
-          const dayKey = ('day' + i) as keyof CourseInfo
-          const clsKey = ('clsrom_' + i) as keyof CourseInfo
-          const time = course[dayKey].trim()
-          if (!time) continue
-          for (let j = 0; j < time.length; j++) {
-            timetable.value[time[j]] = timetable.value[time[j]] || {}
-            timetable.value[time[j]][i] = null
-          }
-          timetable.value[time[0]][i] = {
-            span: time.length,
-            room: course[clsKey].trim() || '無教室資訊',
-            ...course
-          }
+const { data, isFetching, canAbort, abort } = useFetch(url, {
+  refetch: true,
+  afterFetch: ({ data, response }) => {
+    if (!response.ok) throw new Error(data.message)
+    data.forEach((course: CourseInfo) => {
+      for (let i = 1; i < 7; i++) {
+        const dayKey = ('day' + i) as keyof CourseInfo
+        const clsKey = ('clsrom_' + i) as keyof CourseInfo
+        const time = course[dayKey].trim()
+        if (!time) continue
+        for (let j = 0; j < time.length; j++) {
+          timetable.value[time[j]] = timetable.value[time[j]] || {}
+          timetable.value[time[j]][i] = null
         }
-      })
-      return { data, response }
-    }
+        timetable.value[time[0]][i] = {
+          span: time.length,
+          room: course[clsKey].trim() || '無教室資訊',
+          ...course
+        }
+      }
+    })
+    return { data, response }
   }
-).json<CourseInfo[]>()
+}).json<CourseInfo[]>()
 
 const showInfo = (t: CourseInfo) => {
   course.value = t
@@ -177,6 +217,17 @@ const saveDomAsImage = () => {
       link.click()
     })
     .finally(() => (isSaving.value = false))
+}
+
+const clickAddCourse = () => {
+  addCourseDialog.value = true
+}
+
+const addCourse = () => {
+  addCourseDialog.value = false
+  if (!addCourseCode.value) return
+  ser_no.value = ser_no.value.concat(addCourseCode.value.split(',').map(Number))
+  addCourseCode.value = ''
 }
 
 onBeforeUnmount(() => canAbort && abort())

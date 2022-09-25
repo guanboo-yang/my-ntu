@@ -52,8 +52,7 @@ router.beforeEach((to, from, next) => {
   console.debug('routing from', from.path, 'to', to.path)
   const { isLoggedIn } = useUser()
   if (to.meta.requiresAuth && !isLoggedIn.value) next({ name: '登入' })
-  else if (to.name === '登入' && isLoggedIn.value)
-    next(String(to.query.redirect) || '/')
+  else if (to.name === '登入' && isLoggedIn.value) next({ name: '帳號' })
   else next()
 })
 

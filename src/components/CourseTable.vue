@@ -55,7 +55,7 @@ import { times } from '../data'
 import type { CourseInfo } from '../interfaces'
 import { getCourseColor } from '../utils'
 
-defineProps<{
+const props = defineProps<{
   timetable: {
     [key: string]: {
       [key: string]:

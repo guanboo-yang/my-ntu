@@ -46,8 +46,8 @@ const orderMap = useStorage<{
 
 const list = computed(() => {
   return props.data.sort((a, b) => {
-    const orderA = orderMap.value[a[props.sortKey]] || 0
-    const orderB = orderMap.value[b[props.sortKey]] || 0
+    const orderA = orderMap.value[a[props.sortKey]] ?? 100
+    const orderB = orderMap.value[b[props.sortKey]] ?? 100
     return orderA - orderB
   })
 })
@@ -60,10 +60,12 @@ const dragOptions = {
   ghostClass: 'ghost',
   handle: '.handle',
   move: (e: any) => (tempOrder.value = e.relatedContext.list),
-  onEnd: () =>
-    tempOrder.value.forEach(
-      (item, index) => (orderMap.value[item[props.sortKey]] = index)
-    )
+  onEnd: () => {
+    orderMap.value = tempOrder.value.reduce((acc, item, index) => {
+      acc[item[props.sortKey]] = index
+      return acc
+    }, {})
+  }
 }
 </script>
 

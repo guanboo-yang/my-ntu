@@ -75,11 +75,10 @@
 import { onBeforeUnmount, reactive, ref } from 'vue'
 import { useUser } from '../hooks'
 import { mdiEye, mdiEyeOff } from '@mdi/js'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useFetch } from '@vueuse/core'
 
 const router = useRouter()
-const route = useRoute()
 const input = reactive({ name: '', pass: '' })
 const showPass = ref(false)
 const valid = ref(false)

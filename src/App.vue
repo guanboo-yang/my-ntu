@@ -53,7 +53,7 @@ const { isLoggedIn } = useUser()
 .v-tab {
   border-radius: 0;
   letter-spacing: 0;
-  min-width: 80px;
+  min-width: 80px !important;
 }
 .v-window .v-window__container {
   height: 100%;
@@ -65,5 +65,14 @@ const { isLoggedIn } = useUser()
       display: none;
     }
   }
+}
+.v-input__details {
+  padding-bottom: 3px;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px rgb(var(--v-theme-background)) inset !important;
 }
 </style>
