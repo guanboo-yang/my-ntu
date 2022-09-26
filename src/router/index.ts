@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: '成績',
     path: '/grades',
-    component: () => import('../views/Grades.vue'),
+    component: () => import('../views/Grade.vue'),
     meta: { icon: mdiChartBar, requiresAuth: true }
   },
   {
