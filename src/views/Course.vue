@@ -58,17 +58,30 @@
           <v-card-title>
             {{ course.cou_cname }}
           </v-card-title>
-          <v-card-subtitle>
-            <v-row dense>
-              <v-col cols="6">教授：{{ course.tea_cname.trim() }} </v-col>
-              <v-col cols="6"> 學分：{{ course.credit }} </v-col>
-            </v-row>
-            <v-row dense>
-              <v-col cols="6" v-if="course.cls_time.trim()">
-                時間：{{ course.cls_time.trim() }}
+          <v-card-subtitle
+            style="padding: 0; cursor: pointer"
+            @click="dialogExpand = !dialogExpand"
+          >
+            <v-row>
+              <v-col cols="12"> {{ course.cou_ename }} </v-col>
+              <v-col cols="6">
+                時間：{{
+                  course.cls_time.trim() ? course.cls_time.trim() : '無地點資訊'
+                }}
               </v-col>
-              <!-- <v-col cols="6"> 上課地點：{{ course.cls_room.trim() }} </v-col> -->
+              <v-col cols="6"> 地點：{{ getCoursePlace(course) }} </v-col>
             </v-row>
+            <v-expand-transition>
+              <v-row v-show="dialogExpand">
+                <v-col cols="6"> 教授：{{ course.tea_cname.trim() }} </v-col>
+                <v-col cols="6"> 學分：{{ course.credit }} </v-col>
+                <v-col cols="6"> 流水號：{{ course.ser_no }} </v-col>
+                <v-col cols="6"> 識別碼：{{ course.cou_code }} </v-col>
+                <v-col cols="6">
+                  代碼：{{ course.dpt_abbr?.trim() }}{{ course.cou_teacno }}
+                </v-col>
+              </v-row>
+            </v-expand-transition>
           </v-card-subtitle>
           <v-divider style="margin: 8px 0" />
           <div style="margin: -4px 0 8px 0">
@@ -139,7 +152,7 @@ import CourseTable from '../components/CourseTable.vue'
 import CourseList from '../components/CourseList.vue'
 import { links } from '../data'
 import { linkToColor } from '../utils'
-import { CourseInfo } from '../interfaces'
+import type { CourseInfo } from '../interfaces'
 import { mdiPlus, mdiContentSave } from '@mdi/js'
 import { toPng } from 'html-to-image'
 
@@ -147,6 +160,7 @@ import { toPng } from 'html-to-image'
 const ser_no = useStorage<number[]>('courseList', [])
 const tab = ref('list')
 const dialog = ref(false)
+const dialogExpand = ref(false)
 const addCourseDialog = ref(false)
 const addCourseCode = ref('')
 const course = ref<CourseInfo>()
@@ -198,6 +212,16 @@ const { data, isFetching, canAbort, abort } = useFetch(url, {
 const showInfo = (t: CourseInfo) => {
   course.value = t
   dialog.value = true
+  dialogExpand.value = false
+}
+
+const getCoursePlace = (t: CourseInfo) => {
+  const place = []
+  for (let i = 1; i < 7; i++) {
+    const clsKey = ('clsrom_' + i) as keyof CourseInfo
+    place.push(t[clsKey].trim())
+  }
+  return place.filter(v => v).join(', ') || '無教室資訊'
 }
 
 const saveDomAsImage = () => {
@@ -237,6 +261,14 @@ onBeforeUnmount(() => canAbort && abort())
 <style scoped lang="scss">
 .dot::before {
   content: '・';
+}
+.v-row {
+  margin: -2px 0 !important;
+}
+.v-col {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 2px !important;
 }
 .v-dialog :deep(.v-overlay__content) {
   margin: 0;
