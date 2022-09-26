@@ -263,7 +263,7 @@ onBeforeUnmount(() => canAbort && abort())
   content: '・';
 }
 .v-row {
-  margin: -2px 0 !important;
+  margin: 0 !important;
 }
 .v-col {
   text-overflow: ellipsis;
