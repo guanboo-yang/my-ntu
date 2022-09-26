@@ -16,23 +16,35 @@
     <v-window v-model="tab" style="flex: 1">
       <v-window-item value="summary">
         <v-fade-transition leave-absolute group>
-          <div v-if="isFetching" style="text-align: center">
-            <v-progress-circular indeterminate style="height: 200px" />
-          </div>
-          <template v-else-if="error">
-            <p style="padding-top: 50px">爬取失敗... {{ error }}</p>
-            <v-btn color="primary" @click="execute()" style="margin: 15px 5px">
-              重新爬取
-            </v-btn>
+          <div
+            v-if="error"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 5px 10px 5px 5px;
+              border-bottom: 1px solid #aaaaaa80;
+            "
+          >
             <v-btn
-              color="primary"
+              variant="text"
+              color="error"
               @click="logout"
-              style="margin: 15px 5px"
               :to="{ name: '帳號' }"
             >
               重新登入
             </v-btn>
-          </template>
+            <v-btn
+              variant="plain"
+              color="error"
+              :icon="mdiClose"
+              size="x-small"
+              @click="error = ''"
+            />
+          </div>
+          <div v-if="isFetching" style="text-align: center">
+            <v-progress-circular indeterminate style="height: 200px" />
+          </div>
           <v-list v-else variant="elevated" style="padding: 0">
             <v-list-item
               v-for="option of options"
@@ -126,6 +138,7 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { mdiAlertCircle, mdiClose } from '@mdi/js'
 import DataFooter from '../components/DataFooter.vue'
 import { useUser } from '../hooks'
 
@@ -167,6 +180,7 @@ onBeforeUnmount(() => canAbort && abort())
 </script>
 
 <style scoped lang="scss">
+// customize item font size
 :deep(.v-list-item-title) {
   font-size: 15px;
 }
@@ -177,6 +191,15 @@ onBeforeUnmount(() => canAbort && abort())
   flex-direction: column;
   text-align: center;
 }
+// align banner text to middle
+:deep(.v-banner__content) {
+  display: table;
+}
+span.click {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .v-list-item {
   padding: 6px 16px !important;
   margin: 12px;
@@ -186,12 +209,13 @@ onBeforeUnmount(() => canAbort && abort())
     background: rgba(var(--v-theme-secondary));
   }
 }
+// allow scrolling on tabs
 :deep(.v-slide-group__content) {
   /* flex: 0 1 auto; */
   /* overflow-x: auto; */
   scrollbar-width: none;
-}
-:deep(.v-slide-group__content)::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
