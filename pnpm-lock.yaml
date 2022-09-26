@@ -4,8 +4,8 @@ specifiers:
   '@mdi/js': ^7.0.96
   '@netlify/functions': ^1.2.0
   '@vitejs/plugin-vue': ^3.1.0
-  '@vueuse/core': ^9.2.0
-  '@vueuse/router': ^9.2.0
+  '@vueuse/core': ^9.3.0
+  '@vueuse/router': ^9.3.0
   cheerio: ^1.0.0-rc.12
   html-to-image: ^1.10.8
   node-fetch-cookies: ^2.0.4
@@ -22,8 +22,8 @@ specifiers:
   vuetify: ^3.0.0-beta.11
 
 dependencies:
-  '@vueuse/core': 9.2.0_vue@3.2.39
-  '@vueuse/router': 9.2.0_u55wpvgoaskkfdnhr4v2vlugdi
+  '@vueuse/core': 9.3.0_vue@3.2.39
+  '@vueuse/router': 9.3.0_u55wpvgoaskkfdnhr4v2vlugdi
   cheerio: 1.0.0-rc.12
   html-to-image: 1.10.8
   node-fetch-cookies: 2.0.4
@@ -1529,28 +1529,28 @@ packages:
       vue: 3.2.39
       vuetify: 3.0.0-beta.11_ew4en2btqkr4gprokkwq2g42ry
 
-  /@vueuse/core/9.2.0_vue@3.2.39:
-    resolution: {integrity: sha512-/MZ6qpz6uSyaXrtoeBWQzAKRG3N7CvfVWvQxiM3ei3Xe5ydOjjtVbo7lGl9p8dECV93j7W8s63A8H0kFLpLyxg==}
+  /@vueuse/core/9.3.0_vue@3.2.39:
+    resolution: {integrity: sha512-64Rna8IQDWpdrJxgitDg7yv1yTp41ZmvV8zlLEylK4QQLWAhz1OFGZDPZ8bU4lwcGgbEJ2sGi2jrdNh4LttUSQ==}
     dependencies:
       '@types/web-bluetooth': 0.0.15
-      '@vueuse/metadata': 9.2.0
-      '@vueuse/shared': 9.2.0_vue@3.2.39
+      '@vueuse/metadata': 9.3.0
+      '@vueuse/shared': 9.3.0_vue@3.2.39
       vue-demi: 0.13.11_vue@3.2.39
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
-  /@vueuse/metadata/9.2.0:
-    resolution: {integrity: sha512-exN4KE6iquxDCdt72BgEhb3tlOpECtD61AUdXnUqBTIUCl70x1Ar/QXo3bYcvxmdMS2/peQyfeTzBjRTpvL5xw==}
+  /@vueuse/metadata/9.3.0:
+    resolution: {integrity: sha512-GnnfjbzIPJIh9ngL9s9oGU1+Hx/h5/KFqTfJykzh/1xjaHkedV9g0MASpdmPZIP+ynNhKAcEfA6g5i8KXwtoMA==}
     dev: false
 
-  /@vueuse/router/9.2.0_u55wpvgoaskkfdnhr4v2vlugdi:
-    resolution: {integrity: sha512-N80vwh6EGFJiUIyCbfGhEDHzolNvTEPzJBLTuwy7pJU91VjNotMsSvUhwEI8l/cBpdBaIL9dUxRqXDBVrQBahA==}
+  /@vueuse/router/9.3.0_u55wpvgoaskkfdnhr4v2vlugdi:
+    resolution: {integrity: sha512-UFN2MFciprH21oYsAgNHeDJ4Bd86HpRm9gximSN8j6h4fc2aa62fvfhprfHqdTxYAcgcGkMwcc9TO75jOvr8gg==}
     peerDependencies:
       vue-router: '>=4.0.0-rc.1'
     dependencies:
-      '@vueuse/shared': 9.2.0_vue@3.2.39
+      '@vueuse/shared': 9.3.0_vue@3.2.39
       vue-demi: 0.13.11_vue@3.2.39
       vue-router: 4.1.5_vue@3.2.39
     transitivePeerDependencies:
@@ -1558,8 +1558,8 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/shared/9.2.0_vue@3.2.39:
-    resolution: {integrity: sha512-NnRp/noSWuXW0dKhZK5D0YLrDi0nmZ18UeEgwXQq7Ul5TTP93lcNnKjrHtd68j2xFB/l59yPGFlCryL692bnrA==}
+  /@vueuse/shared/9.3.0_vue@3.2.39:
+    resolution: {integrity: sha512-caGUWLY0DpPC6l31KxeUy6vPVNA0yKxx81jFYLoMpyP6cF84FG5Dkf69DfSUqL57wX8JcUkJDMnQaQIZPWFEQQ==}
     dependencies:
       vue-demi: 0.13.11_vue@3.2.39
     transitivePeerDependencies:
