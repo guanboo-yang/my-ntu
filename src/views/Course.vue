@@ -72,7 +72,7 @@
               <v-col cols="6"> 地點：{{ getCoursePlace(course) }} </v-col>
             </v-row>
             <v-expand-transition>
-              <v-row v-show="dialogExpand">
+              <v-row v-if="dialogExpand">
                 <v-col cols="6"> 教授：{{ course.tea_cname.trim() }} </v-col>
                 <v-col cols="6"> 學分：{{ course.credit }} </v-col>
                 <v-col cols="6"> 流水號：{{ course.ser_no }} </v-col>

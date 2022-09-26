@@ -4,90 +4,96 @@
   >
     <v-tabs v-model="tab" centered bg-color="primary" hide-slider>
       <v-tab value="summary">總覽</v-tab>
-      <v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
-      <v-tab v-else v-for="option of options" :key="option" :value="option">
-        {{ grades[option]?.year }}學年
-        <br />
-        {{ grades[option]?.semester === '1' ? '上學期' : '下學期' }}
-      </v-tab>
+      <v-scale-transition leave-absolute group hide-on-leave origin="left">
+        <v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
+        <v-tab v-else v-for="option of options" :key="option" :value="option">
+          {{ grades[option]?.year }}學年
+          <br />
+          {{ grades[option]?.semester === '1' ? '上學期' : '下學期' }}
+        </v-tab>
+      </v-scale-transition>
     </v-tabs>
     <v-window v-model="tab" style="flex: 1">
-      <v-window-item value="summary" style="text-align: center">
-        <v-progress-circular
-          v-if="isFetching"
-          indeterminate
-          style="height: 200px"
-        />
-        <template v-else-if="error">
-          <p style="padding-top: 50px">爬取失敗... {{ error }}</p>
-          <v-btn color="primary" @click="execute()" style="margin: 15px 5px">
-            重新爬取
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="logout"
-            style="margin: 15px 5px"
-            :to="{ name: '帳號' }"
+      <v-window-item value="summary">
+        <v-fade-transition leave-absolute group>
+          <div v-if="isFetching" style="text-align: center">
+            <v-progress-circular indeterminate style="height: 200px" />
+          </div>
+          <template v-else-if="error">
+            <p style="padding-top: 50px">爬取失敗... {{ error }}</p>
+            <v-btn color="primary" @click="execute()" style="margin: 15px 5px">
+              重新爬取
+            </v-btn>
+            <v-btn
+              color="primary"
+              @click="logout"
+              style="margin: 15px 5px"
+              :to="{ name: '帳號' }"
+            >
+              重新登入
+            </v-btn>
+          </template>
+          <v-list v-else variant="elevated" style="padding: 0">
+            <v-list-item
+              v-for="option of options"
+              :key="option"
+              @click="tab = option"
+              class="secondary"
+            >
+              <v-row>
+                <v-col cols="3" style="text-align: center">
+                  <span>{{ grades[option]?.year }}學年</span>
+                  <br />
+                  <span>
+                    {{ grades[option]?.semester === '1' ? '上學期' : '下學期' }}
+                  </span>
+                </v-col>
+                <v-col cols="3" style="text-align: center">
+                  <span>學分</span>
+                  <br />
+                  <span>{{ grades[option]?.credits || '--' }}</span>
+                </v-col>
+                <v-col cols="3" style="text-align: center">
+                  <span>排名</span>
+                  <br />
+                  <span>{{ grades[option]?.rank || '--' }}</span>
+                </v-col>
+                <v-col cols="3" style="text-align: center">
+                  <span>平均</span>
+                  <br />
+                  <span>{{ grades[option]?.gpa || '--' }}</span>
+                </v-col>
+              </v-row>
+            </v-list-item>
+          </v-list>
+          <data-footer
+            :execute="execute"
+            source="NTU ePortfolio"
+            style="margin-top: auto"
           >
-            重新登入
-          </v-btn>
-        </template>
-        <v-list v-else variant="elevated" style="padding: 0">
-          <v-list-item
-            v-for="option of options"
-            :key="option"
-            @click="tab = option"
-            class="secondary"
-          >
-            <v-row>
-              <v-col cols="3" style="text-align: center">
-                <span>{{ grades[option]?.year }}學年</span>
-                <br />
-                <span>
-                  {{ grades[option]?.semester === '1' ? '上學期' : '下學期' }}
-                </span>
-              </v-col>
-              <v-col cols="3" style="text-align: center">
-                <span>學分</span>
-                <br />
-                <span>{{ grades[option]?.credits || '--' }}</span>
-              </v-col>
-              <v-col cols="3" style="text-align: center">
-                <span>排名</span>
-                <br />
-                <span>{{ grades[option]?.rank || '--' }}</span>
-              </v-col>
-              <v-col cols="3" style="text-align: center">
-                <span>平均</span>
-                <br />
-                <span>{{ grades[option]?.gpa || '--' }}</span>
-              </v-col>
-            </v-row>
-          </v-list-item>
-        </v-list>
-        <data-footer :execute="execute" source="NTU ePortfolio">
-          嘗試刷新成績
-        </data-footer>
+            嘗試刷新成績
+          </data-footer>
+        </v-fade-transition>
       </v-window-item>
       <v-window-item v-for="option of options" :key="option" :value="option">
         <v-list variant="elevated" style="padding: 0">
           <v-list-item class="secondary">
             <v-row>
-              <v-col cols="4" style="text-align: center">
+              <v-col cols="4">
                 <span>學分</span>
                 <br />
                 <span style="font-weight: 500">
                   {{ grades[option]?.credits || '--' }}
                 </span>
               </v-col>
-              <v-col cols="4" style="text-align: center">
+              <v-col cols="4">
                 <span>排名</span>
                 <br />
                 <span style="font-weight: 500">
                   {{ grades[option]?.rank || '--' }}
                 </span>
               </v-col>
-              <v-col cols="4" style="text-align: center">
+              <v-col cols="4">
                 <span>平均</span>
                 <br />
                 <span style="font-weight: 500">
@@ -99,6 +105,7 @@
           <v-list-item
             v-for="(course, index) in grades[option]?.courses"
             :key="index"
+            style="text-align: left"
           >
             <v-list-item-title>{{ course.name }}</v-list-item-title>
             <v-list-item-subtitle>
@@ -165,6 +172,10 @@ onBeforeUnmount(() => canAbort && abort())
 }
 :deep(.v-list-item-subtitle) {
   font-size: 14px;
+}
+.v-window-item {
+  flex-direction: column;
+  text-align: center;
 }
 .v-list-item {
   padding: 6px 16px !important;

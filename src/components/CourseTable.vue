@@ -1,53 +1,46 @@
 <template>
-  <v-table fixed-header height="calc(100vh - 160px)">
-    <thead>
-      <tr>
-        <th>111-1</th>
-        <th v-for="day in '一二三四五六'" :key="day">{{ day }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(time, timeKey) in times" :key="time">
-        <td>
-          <p>{{ time }}</p>
-          <p>{{ timeKey }}</p>
-        </td>
-        <template v-for="day in 6" :key="day">
-          <template v-if="isFetching">
-            <td
-              v-if="day === 1 && timeKey === '0'"
-              rowspan="15"
-              colspan="5"
-              style="vertical-align: middle; text-align: center"
-            >
-              <v-progress-circular indeterminate />
-            </td>
-          </template>
-          <template v-else>
+  <v-fade-transition leave-absolute>
+    <div v-if="isFetching" style="text-align: center">
+      <v-progress-circular indeterminate style="height: 200px" />
+    </div>
+    <v-table v-else fixed-header height="calc(100vh - 160px)">
+      <thead>
+        <tr>
+          <th>111-1</th>
+          <th v-for="day in '一二三四五六'" :key="day">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(time, timeKey) in times" :key="time">
+          <td>
+            <p>{{ time }}</p>
+            <p>{{ timeKey }}</p>
+          </td>
+          <template v-for="day in 6" :key="day">
             <td v-if="timetable[timeKey]?.[day] === undefined" />
             <td
               v-else-if="timetable[timeKey]?.[day]"
               :rowspan="timetable[timeKey][day]!.span"
               :style="`background-color: ${getCourseColor(
-                timetable[timeKey][day]!.cou_cname
-              )};`"
+                  timetable[timeKey][day]!.cou_cname
+                )};`"
               @click="showInfo(timetable[timeKey][day]!)"
             >
               <div
                 :style="`max-height: ${
-                  42 * timetable[timeKey][day]!.span
-                }px; overflow: scroll;
-                `"
+                    42 * timetable[timeKey][day]!.span
+                  }px; overflow: scroll;
+                  `"
               >
                 {{ timetable[timeKey][day]!.cou_cname }}
                 <p>{{ timetable[timeKey][day]!.room }}</p>
               </div>
             </td>
           </template>
-        </template>
-      </tr>
-    </tbody>
-  </v-table>
+        </tr>
+      </tbody>
+    </v-table>
+  </v-fade-transition>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-fade-transition leave-absolute>
     <div v-if="isFetching" style="text-align: center">
       <v-progress-circular indeterminate style="height: 200px" />
     </div>
@@ -19,7 +19,7 @@
         {{ element.dpt_abbr?.trim() }}{{ element.cou_teacno }}
       </template>
     </draggable>
-  </div>
+  </v-fade-transition>
 </template>
 
 <script setup lang="ts">
