@@ -14,7 +14,7 @@ export default defineConfig({
       }
     }),
     VitePWA({
-      // registerType: 'autoUpdate',
+      registerType: 'prompt',
       devOptions: {
         enabled: true
       },
@@ -27,6 +27,7 @@ export default defineConfig({
         name: '臺灣大學',
         short_name: '臺灣大學',
         description: '臺灣大學',
+        orientation: 'portrait',
         theme_color: '#691917',
         icons: [
           {
