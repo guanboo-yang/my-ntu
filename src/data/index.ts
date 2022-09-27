@@ -24,7 +24,13 @@ export const links: {
     { name: 'Video', url: 'https://speech.ee.ntu.edu.tw/DSP2022Autumn#video' }
   ],
   '57575': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16494' }],
-  '67883': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' }],
+  '67883': [
+    { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' },
+    {
+      name: 'WebEx',
+      url: 'https://ntucc.webex.com/ntucc/j.php?MTID=m02c5b882b2074d0402094b3450c1467a'
+    }
+  ],
   '77445': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19398' }],
   '97112': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19580' }]
 }
