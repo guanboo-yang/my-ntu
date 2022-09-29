@@ -38,6 +38,7 @@ export const links: {
     }
   ],
   '77445': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19398' }],
+  '95108': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/21705' }],
   '97112': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19580' }]
 }
 
