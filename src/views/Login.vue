@@ -56,7 +56,7 @@
         </v-form>
       </v-card-item>
     </v-card>
-    <p
+    <!-- <p
       style="
         opacity: 0.5;
         font-size: 14px;
@@ -67,7 +67,7 @@
       <span>
         聲明：本網頁不儲存使用者密碼，僅用於首次登入學校系統爬取資料。
       </span>
-    </p>
+    </p> -->
   </v-container>
 </template>
 

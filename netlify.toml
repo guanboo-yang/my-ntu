@@ -9,3 +9,6 @@
 	for = "/manifest.webmanifest"
 	[headers.values]
 		Content-Type = "application/manifest+json"
+
+[dev]
+	targetPort = 5173

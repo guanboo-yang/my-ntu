@@ -17,13 +17,19 @@ export const links: {
     }
   ],
   '44602': [],
-  '48143': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20138' }],
+  '48143': [
+    { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20138' },
+    { name: 'Gradescope', url: 'https://www.gradescope.com/courses/442336' }
+  ],
   '51383': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20073' },
     { name: 'Website', url: 'https://speech.ee.ntu.edu.tw/DSP2022Autumn' },
     { name: 'Video', url: 'https://speech.ee.ntu.edu.tw/DSP2022Autumn#video' }
   ],
-  '57575': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16494' }],
+  '57575': [
+    { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16494' },
+    { name: 'Gradescope', url: 'https://www.gradescope.com/courses/406307' }
+  ],
   '67883': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' },
     {
