@@ -92,7 +92,7 @@ import { computed, onBeforeUnmount, ref } from 'vue'
 import { mdiClose } from '@mdi/js'
 import CourseTable from '../components/CourseTable.vue'
 import CourseList from '../components/CourseList.vue'
-import CourseDialog from './CourseDialog.vue'
+import CourseDialog from '../components/CourseDialog.vue'
 import type { CourseInfo } from '../interfaces'
 import { mdiPlus, mdiContentSave } from '@mdi/js'
 import { toPng } from 'html-to-image'
@@ -158,7 +158,7 @@ const saveDomAsImage = () => {
   if (isSaving.value) return
   isSaving.value = true
   const selector =
-    tab.value === 'table' ? '.save-to-image table' : '.save-to-image .v-list'
+    tab.value === 'table' ? '.save-to-image table' : '.save-to-image.v-list'
   const dom = document.querySelector(selector) as HTMLElement
   console.log(dom)
   if (!dom) return
