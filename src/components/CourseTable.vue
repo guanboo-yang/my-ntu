@@ -23,7 +23,7 @@
               :rowspan="timetable[timeKey][day]!.span"
               :style="`background-color: ${getCourseColor(
                   timetable[timeKey][day]!.cou_cname
-                )};`"
+                )}; cursor: pointer`"
               @click="showInfo(timetable[timeKey][day]!)"
             >
               <div

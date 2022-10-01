@@ -5,8 +5,12 @@ export const links: {
 } = {
   '13088': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/18693' }],
   '20938': [
-    { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~data' }
-    // { name: 'Excel', url: 'https://docs.google.com/spreadsheets/d/1DaMp9tnldaRLo32aSDPH5KgmcVAmmVF1zJYkJkWxpy0' },
+    { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~data' },
+    { name: 'Meet', url: 'https://meet.google.com/axe-omnp-vfg' },
+    {
+      name: 'Excel',
+      url: 'https://docs.google.com/spreadsheets/d/1HNqA8DD8s7or-ehl4xK85F9MC3ncwhP4rJ808UiGCRk/edit#gid=0'
+    }
   ],
   '32336': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19828' },
@@ -33,7 +37,7 @@ export const links: {
   '67883': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' },
     {
-      name: 'WebEx',
+      name: 'Webex',
       url: 'https://ntucc.webex.com/ntucc/j.php?MTID=m02c5b882b2074d0402094b3450c1467a'
     }
   ],

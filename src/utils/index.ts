@@ -33,14 +33,17 @@ export const parseInfo = (info: string) => {
 const linkColorMap = new Map<string, { light: string; dark: string }>([
   ['Ceiba', { light: '#82c400', dark: '' }],
   ['Cool', { light: '#003366', dark: '' }],
+  ['Excel', { light: '#188038', dark: '' }],
   ['Gather Town', { light: '#00a0e9', dark: '' }],
   ['Github', { light: '', dark: '' }],
   ['Gradescope', { light: '#1ca0a0', dark: '' }],
   ['Judge', { light: '', dark: '' }],
   ['Mail', { light: '', dark: '' }],
-  ['Meet', { light: '', dark: '' }],
+  ['Meet', { light: '#1a73e8', dark: '' }],
   ['Slido', { light: '#39ac37', dark: '' }],
+  ['Video', { light: '#ff3200', dark: '' }],
   ['Webex', { light: '#00bbed', dark: '' }],
+  ['Website', { light: '#6a1b9a', dark: '' }],
   ['YouTube', { light: '#ff3200', dark: '' }]
 ])
 

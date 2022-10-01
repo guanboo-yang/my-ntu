@@ -5,7 +5,7 @@
     <v-tabs v-model="tab" centered bg-color="primary" hide-slider>
       <v-tab value="summary">總覽</v-tab>
       <v-scale-transition leave-absolute group hide-on-leave origin="left">
-        <v-tab v-if="isFetching" disabled>努力爬取中...</v-tab>
+        <v-tab v-if="isFetching" disabled key="loading">努力爬取中...</v-tab>
         <v-tab v-else v-for="option of options" :key="option" :value="option">
           {{ grades[option]?.year }}學年
           <br />
@@ -18,6 +18,7 @@
         <v-fade-transition leave-absolute group>
           <div
             v-if="error"
+            key="error"
             style="
               display: flex;
               justify-content: space-between;
@@ -42,10 +43,10 @@
               @click="error = ''"
             />
           </div>
-          <div v-if="isFetching" style="text-align: center">
+          <div v-if="isFetching" style="text-align: center" key="loading">
             <v-progress-circular indeterminate style="height: 200px" />
           </div>
-          <v-list v-else variant="elevated" style="padding: 0">
+          <v-list v-else variant="elevated" style="padding: 0" key="list">
             <v-list-item
               v-for="option of options"
               :key="option"
@@ -81,6 +82,7 @@
           <data-footer
             :execute="execute"
             source="NTU ePortfolio"
+            key="footer"
             style="margin-top: auto"
           >
             嘗試刷新成績
