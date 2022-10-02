@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@mdi/js': ^7.0.96
   '@netlify/functions': ^1.2.0
-  '@vitejs/plugin-vue': ^3.1.0
+  '@vitejs/plugin-vue': ^3.1.2
   '@vueuse/core': ^9.3.0
   '@vueuse/router': ^9.3.0
   cheerio: ^1.0.0-rc.12
@@ -35,7 +35,7 @@ dependencies:
 devDependencies:
   '@mdi/js': 7.0.96
   '@netlify/functions': 1.2.0
-  '@vitejs/plugin-vue': 3.1.0_vite@3.1.4+vue@3.2.40
+  '@vitejs/plugin-vue': 3.1.2_vite@3.1.4+vue@3.2.40
   prettier: 2.7.1
   sass: 1.55.0
   typescript: 4.8.4
@@ -1399,8 +1399,8 @@ packages:
     resolution: {integrity: sha512-w7hEHXnPMEZ+4nGKl/KDRVpxkwYxYExuHOYXyzIzCDzEZ9ZCGMAewulr9IqJu2LR4N37fcnb1XVeuZ09qgOxhA==}
     dev: false
 
-  /@vitejs/plugin-vue/3.1.0_vite@3.1.4+vue@3.2.40:
-    resolution: {integrity: sha512-fmxtHPjSOEIRg6vHYDaem+97iwCUg/uSIaTzp98lhELt2ISOQuDo2hbkBdXod0g15IhfPMQmAxh4heUks2zvDA==}
+  /@vitejs/plugin-vue/3.1.2_vite@3.1.4+vue@3.2.40:
+    resolution: {integrity: sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^3.0.0

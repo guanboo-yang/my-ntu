@@ -1,7 +1,7 @@
 {
   "name": "my-ntu",
   "private": true,
-  "version": "1.24.0",
+  "version": "1.24.1",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@mdi/js": "^7.0.96",
     "@netlify/functions": "^1.2.0",
-    "@vitejs/plugin-vue": "^3.1.0",
+    "@vitejs/plugin-vue": "^3.1.2",
     "prettier": "^2.7.1",
     "sass": "^1.55.0",
     "typescript": "^4.8.4",
