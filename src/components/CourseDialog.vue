@@ -107,11 +107,4 @@ watch(
   overflow: hidden;
   padding: 2px !important;
 }
-.v-dialog :deep(.v-overlay__content) {
-  margin: 0;
-  width: unset;
-}
-.v-dialog :deep(.v-overlay__scrim) {
-  background: #000;
-}
 </style>

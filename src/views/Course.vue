@@ -192,11 +192,4 @@ onBeforeUnmount(() => canAbort && abort())
 .dot::before {
   content: '・';
 }
-.v-dialog :deep(.v-overlay__content) {
-  margin: 0;
-  width: unset;
-}
-.v-dialog :deep(.v-overlay__scrim) {
-  background: #000;
-}
 </style>

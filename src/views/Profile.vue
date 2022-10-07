@@ -2,9 +2,11 @@
   <v-container>
     <v-card style="text-align: center; transition: none; margin-bottom: 10px">
       <v-card-item>
-        <v-avatar size="80" style="background: #bbb3; margin-bottom: 12px">
-          <v-img src="/ntu.png" />
-        </v-avatar>
+        <v-avatar
+          size="80"
+          image="/ntu.png"
+          style="background: #bbb3; margin-bottom: 12px"
+        />
         <h3>{{ profile.name || '訪客' }}</h3>
         <p style="opacity: 0.5">{{ profile.id || '請先登入' }}</p>
       </v-card-item>

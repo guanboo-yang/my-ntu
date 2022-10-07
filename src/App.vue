@@ -27,6 +27,7 @@ const { isLoggedIn } = useUser()
 }
 .v-theme--dark,
 .v-theme--light {
+  // make text more clear
   --v-high-emphasis-opacity: 1 !important;
 }
 .fade {
@@ -39,20 +40,13 @@ const { isLoggedIn } = useUser()
     opacity: 0;
   }
 }
-.v-tabs {
-  z-index: 10;
-}
-.v-tabs .v-tab.v-btn {
-  &.v-btn--active .v-btn__overlay {
-    background: transparent !important;
-  }
-  &:not(.v-btn--active) {
-    opacity: 0.6;
-  }
+.v-tab:not(.v-tab--selected) {
+  // update in vuetify 3.0.0-beta.12
+  opacity: 0.6;
 }
 .v-tab {
   border-radius: 0;
-  letter-spacing: 0;
+  // letter-spacing: 0;
   min-width: 80px !important;
 }
 .v-window .v-window__container {
@@ -65,6 +59,12 @@ const { isLoggedIn } = useUser()
       display: none;
     }
   }
+}
+.v-dialog .v-overlay__content {
+  width: unset !important;
+}
+.v-dialog .v-overlay__scrim {
+  background: #000;
 }
 .v-input__details {
   padding-bottom: 3px;
