@@ -5,6 +5,7 @@ export const links: {
 } = {
   '13088': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/18693' }],
   '20938': [
+    { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/21386' },
     { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~data' },
     { name: 'Meet', url: 'https://meet.google.com/axe-omnp-vfg' },
     {
