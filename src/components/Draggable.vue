@@ -11,12 +11,9 @@
           style="padding: 8px 16px; max-height: 999999px"
         >
           <template #prepend>
+            <!-- webp cannot be screenshot in dom-to-image -->
             <v-avatar size="40">
-              <v-img src="/ntu.webp">
-                <template #sources>
-                  <source srcset="/ntu.png" />
-                </template>
-              </v-img>
+              <v-img src="/ntu.png" />
             </v-avatar>
           </template>
           <!-- prevent chrome mobile change font-size -->
