@@ -10,12 +10,12 @@ const { isLoggedIn } = useUser()
     <the-navbar />
     <v-main>
       <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
+        <v-fade-transition mode="out-in">
           <keep-alive v-if="isLoggedIn">
             <component :is="Component" />
           </keep-alive>
           <component v-else :is="Component" />
-        </transition>
+        </v-fade-transition>
       </router-view>
     </v-main>
   </v-app>
@@ -29,16 +29,6 @@ const { isLoggedIn } = useUser()
 .v-theme--light {
   // make text more clear
   --v-high-emphasis-opacity: 1 !important;
-}
-.fade {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.2s ease-out;
-  }
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
 }
 .v-tab:not(.v-tab--selected) {
   // update in vuetify 3.0.0-beta.12
