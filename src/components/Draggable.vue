@@ -8,7 +8,6 @@
           target="_blank"
           rel="noopener"
           @click="props.itemClick?.(element)"
-          style="padding: 8px 16px; max-height: 999999px"
         >
           <template #prepend>
             <!-- webp cannot be screenshot in dom-to-image -->
@@ -75,6 +74,13 @@ const dragOptions = {
 </script>
 
 <style scoped>
+.v-list {
+  overflow-x: hidden;
+}
+.v-list-item {
+  padding: 8px 16px !important;
+  max-height: 999999px;
+}
 :deep(.v-list-item-title) {
   font-size: 14px;
 }
