@@ -14,13 +14,14 @@ export const links: {
   ],
   '32336': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19828' },
+    { name: 'Kaggle', url: 'https://www.kaggle.com/competitions' },
     { name: 'Website', url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl' },
     {
       name: 'Video',
       url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl#syllabus'
     }
   ],
-  '44602': [],
+  '44602': [{ name: 'Meet', url: 'https://meet.google.com/toa-cdwu-cpy' }],
   '48143': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/20138' },
     { name: 'Gradescope', url: 'https://www.gradescope.com/courses/442336' }
