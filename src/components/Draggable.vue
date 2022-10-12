@@ -57,6 +57,7 @@ const list = computed(() => {
 })
 
 const tempOrder = ref<any[]>([])
+const isDragging = ref(false)
 
 const dragOptions = {
   itemKey: props.sortKey,
@@ -64,7 +65,9 @@ const dragOptions = {
   ghostClass: 'ghost',
   handle: '.handle',
   move: (e: any) => (tempOrder.value = e.relatedContext.list),
+  onStart: () => (isDragging.value = true),
   onEnd: () => {
+    isDragging.value = false
     orderMap.value = tempOrder.value.reduce((acc, item, index) => {
       acc[item[props.sortKey]] = index
       return acc
