@@ -1,7 +1,7 @@
 {
   "name": "my-ntu",
   "private": true,
-  "version": "1.26.4",
+  "version": "1.26.5",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
@@ -32,6 +32,6 @@
     "vite": "^3.1.7",
     "vite-plugin-pwa": "^0.13.1",
     "vite-plugin-vuetify": "^1.0.0-alpha.17",
-    "vue-tsc": "1.0.3"
+    "vue-tsc": "1.0.6"
   }
 }
