@@ -20,7 +20,8 @@ export const links: {
     {
       name: 'Video',
       url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl#syllabus'
-    }
+    },
+    { name: 'Slido', url: 'https://app.sli.do/event/mPPtwamPwAx2LbPULN9v2A' }
   ],
   '44602': [{ name: 'Meet', url: 'https://meet.google.com/toa-cdwu-cpy' }],
   '48143': [
