@@ -1,7 +1,7 @@
 {
   "name": "my-ntu",
   "private": true,
-  "version": "1.28.1",
+  "version": "1.28.2",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
@@ -20,7 +20,7 @@
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
     "vuedraggable": "^4.1.0",
-    "vuetify": "3.0.0-beta.13"
+    "vuetify": "3"
   },
   "devDependencies": {
     "@mdi/js": "^7.0.96",
