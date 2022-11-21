@@ -21,6 +21,10 @@ export const links: {
       name: 'Video',
       url: 'https://www.csie.ntu.edu.tw/~miulab/f111-adl#syllabus'
     },
+    {
+      name: 'Youtube',
+      url: 'https://www.youtube.com/playlist?list=PLOAQYZPRn2V5yumEV1Wa4JvRiDluf83vn'
+    },
     { name: 'Slido', url: 'https://app.sli.do/event/mPPtwamPwAx2LbPULN9v2A' }
   ],
   '44602': [{ name: 'Meet', url: 'https://meet.google.com/toa-cdwu-cpy' }],
@@ -35,13 +39,21 @@ export const links: {
   ],
   '57575': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16494' },
-    { name: 'Gradescope', url: 'https://www.gradescope.com/courses/406307' }
+    { name: 'Gradescope', url: 'https://www.gradescope.com/courses/406307' },
+    {
+      name: 'Youtube',
+      url: 'https://www.youtube.com/playlist?list=PLZn91hOY62sx7wVWVuDPbxixwk1XoV4Ti'
+    }
   ],
   '67883': [
     { name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/16621' },
     {
       name: 'Webex',
       url: 'https://ntucc.webex.com/ntucc/j.php?MTID=m02c5b882b2074d0402094b3450c1467a'
+    },
+    {
+      name: 'Youtube',
+      url: 'https://www.youtube.com/playlist?list=PLqwUtSomsxQBGIBvIZ1Fr9v-rQJQI8und'
     }
   ],
   '77445': [{ name: 'Cool', url: 'https://cool.ntu.edu.tw/courses/19398' }],
