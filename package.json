@@ -1,7 +1,7 @@
 {
   "name": "my-ntu",
   "private": true,
-  "version": "1.29.0",
+  "version": "1.29.1",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
@@ -12,21 +12,21 @@
     "fmt.check": "prettier --check ."
   },
   "dependencies": {
-    "@vueuse/core": "^9.5.0",
-    "@vueuse/router": "^9.5.0",
+    "@vueuse/core": "^9.6.0",
+    "@vueuse/router": "^9.6.0",
     "cheerio": "^1.0.0-rc.12",
     "html-to-image": "^1.10.8",
     "node-fetch-cookies": "^2.0.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuedraggable": "^4.1.0",
-    "vuetify": "^3.0.1"
+    "vuetify": "^3.0.2"
   },
   "devDependencies": {
     "@mdi/js": "^7.0.96",
     "@netlify/functions": "^1.3.0",
     "@vitejs/plugin-vue": "^3.2.0",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.0",
     "sass": "^1.56.1",
     "typescript": "^4.9.3",
     "vite": "^3.2.4",
