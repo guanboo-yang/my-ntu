@@ -31,5 +31,5 @@ jobs:
       with:
         version: 7
         run-install: false
-    - run: pnpm ci
+    - run: pnpm ci --frozen-lockfile
     - run: pnpm run build --if-present
