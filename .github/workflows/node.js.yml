@@ -29,5 +29,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-    - run: pnpm ci --frozon-lockfile
+    - run: pnpm install --frozon-lockfile
     - run: pnpm run build --if-present
