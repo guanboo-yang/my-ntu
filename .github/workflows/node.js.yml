@@ -21,15 +21,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 7
-        run-install: false
-    - run: pnpm ci --frozen-lockfile
+        cache: 'pnpm'
+    - run: pnpm ci --frozon-lockfile
     - run: pnpm run build --if-present
